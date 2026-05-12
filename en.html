@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Gastrofon · Product Overview — ninepointfive AI</title>
+<title>Gastrofon · Product Overview - ninepointfive AI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -88,7 +88,7 @@ body {
   border-radius: 0 2px 2px 0;
 }
 
-/* Stage fix im Viewport zentriert — Skalierung via JS (window.innerWidth/Height) */
+/* Stage fix im Viewport zentriert - Skalierung via JS (window.innerWidth/Height) */
 .stage {
   position: fixed;
   top: 50%;
@@ -307,7 +307,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   100% { transform: scale(1.22) translate(2.2%, 1.6%); }
 }
 /* Kontinuierliche Kamerafahrt: läuft als Schleife durch, ohne sichtbaren Reset.
-   End-Zustand entspricht Start-Zustand — der Übergang ist unsichtbar weich. */
+   End-Zustand entspricht Start-Zustand - der Übergang ist unsichtbar weich. */
 @keyframes ken-burns-cinema {
   0%    { transform: scale(1.12) translate(-5.6%, -5.6%) rotate(-0.18deg); }
   25%   { transform: scale(1.16) translate(-4.4%, -4.4%) rotate(-0.05deg); }
@@ -374,11 +374,11 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   background-size: cover;
   background-position: 90% 85%;
   /* Cinematischer Drift: nicht alternate, sondern kontinuierliche Schleife mit
-     leichter Rotation und mehrstufigem Pfad — wirkt wie eine Kamerafahrt. */
+     leichter Rotation und mehrstufigem Pfad - wirkt wie eine Kamerafahrt. */
   animation: ken-burns-cinema 28s cubic-bezier(.45,.05,.55,.95) infinite;
   will-change: transform;
 }
-/* Subtiler warmer Glanz, der diagonal driftet — wie Kerzenlicht, das durchs Bild wandert */
+/* Subtiler warmer Glanz, der diagonal driftet - wie Kerzenlicht, das durchs Bild wandert */
 .cover-glint {
   position: absolute;
   inset: 0;
@@ -399,10 +399,10 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   background:
     /* Lese-Lane links für Header/Content-Lesbarkeit, rechts deutlich heller */
     linear-gradient(110deg, rgba(5,12,3,.74) 0%, rgba(5,12,3,.42) 45%, rgba(5,12,3,.10) 100%),
-    /* Sanfte Vignette oben/unten — rechts freundlicher */
+    /* Sanfte Vignette oben/unten - rechts freundlicher */
     linear-gradient(180deg, rgba(5,12,3,.26) 0%, transparent 20%, transparent 80%, rgba(5,12,3,.34) 100%);
 }
-/* Chrome bleibt position:absolute (aus Basis-Styles) — nur z-index oben halten */
+/* Chrome bleibt position:absolute (aus Basis-Styles) - nur z-index oben halten */
 .cover .slide-chrome,
 .cover .slide-footer { z-index: 3; }
 .cover-content { position: relative; z-index: 3; }
@@ -836,13 +836,13 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 .slide-sources a:hover { color: var(--ink-soft); }
 .kpi-source sup, .metric-src sup { font-size: 10px; }
 
-/* Icon-Farb-Cycling — UC-Bullet-Icons */
+/* Icon-Farb-Cycling - UC-Bullet-Icons */
 .uc-bullets li:nth-child(4n+1) .bullet-icon { background: var(--brand-light);   color: var(--brand); }
 .uc-bullets li:nth-child(4n+2) .bullet-icon { background: #FDF3E3;              color: #C27A14; }
 .uc-bullets li:nth-child(4n+3) .bullet-icon { background: var(--gastro-light);  color: var(--gastro-dark); }
 .uc-bullets li:nth-child(4n+4) .bullet-icon { background: #E3F2FB;              color: #2E8FBB; }
 
-/* Icon-Farb-Cycling — Benefit-Icons Slide 3 */
+/* Icon-Farb-Cycling - Benefit-Icons Slide 3 */
 .benefit-item:nth-child(5n+1) .benefit-icon { background: var(--brand-light);   color: var(--brand); }
 .benefit-item:nth-child(5n+2) .benefit-icon { background: #FDF3E3;              color: #C27A14; }
 .benefit-item:nth-child(5n+3) .benefit-icon { background: #E3F2FB;              color: #2E8FBB; }
@@ -1465,14 +1465,14 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   letter-spacing: 0.05em;
 }
 
-/* ───────── Variant: short — hide non-short slides ───────── */
+/* ───────── Variant: short - hide non-short slides ───────── */
 body[data-variant="short"] .slide:not([data-short]) { display: none !important; }
 
 /* Bonus visibility */
 body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
 /* ═══════════════════════════════════════════════════════
-   UC-KONZEPTE — Hintergrundbild ab Demo-Block-Mitte nach rechts
+   UC-KONZEPTE - Hintergrundbild ab Demo-Block-Mitte nach rechts
    3-Spalter: Demo-Block-Mitte ~53% → Bild width 47%
    2-Spalter: Demo-Block-Mitte ~73% → Bild width 27%
    ═══════════════════════════════════════════════════════ */
@@ -1691,7 +1691,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 .qr-floater img { width: 100% !important; height: 100% !important; display: block; border-radius: 6px; }
 .qr-floater svg { display: block; width: 100%; height: 100%; }
 
-/* Anwendungsfälle 3, 4, 5 — kompakteres uc-story damit Hörprobe sauber sichtbar bleibt */
+/* Anwendungsfälle 3, 4, 5 - kompakteres uc-story damit Hörprobe sauber sichtbar bleibt */
 .concept-c .uc-bullets, .concept-d .uc-bullets, .concept-e .uc-bullets { gap: 14px; }
 .concept-c .uc-story .uc-setup, .concept-d .uc-story .uc-setup, .concept-e .uc-story .uc-setup { margin-bottom: 28px; }
 .concept-c .uc-cta-inline, .concept-d .uc-cta-inline, .concept-e .uc-cta-inline { margin-top: 24px; }
@@ -1748,7 +1748,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 }
 
 /* ─── Slide 6: Demo-Block in Story integriert ─── */
-/* .uc-no-demo override entfernt — slide 6 nutzt jetzt das einheitliche concept-Layout */
+/* .uc-no-demo override entfernt - slide 6 nutzt jetzt das einheitliche concept-Layout */
 .demo-inline {
   margin-top: 28px;
   padding-top: 22px;
@@ -1985,7 +1985,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
   if (sessionStorage.getItem('npf_auth') === '1') {
     gate.style.display = 'none';
-    // mobile-gate existiert noch nicht — warten bis DOM geladen
+    // mobile-gate existiert noch nicht - warten bis DOM geladen
     if (isMobile()) {
       document.addEventListener('DOMContentLoaded', () => {
         getMobileGate().style.display = 'flex';
@@ -2065,7 +2065,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     <div class="problem-header">
       <div class="eyebrow danger reveal" style="--i:0">Every missed call is lost revenue</div>
       <h1 class="reveal" style="--i:1">But every second call <em>goes unanswered.</em></h1>
-      <p class="reveal" style="--i:2">Missed calls in restaurants are not an outlier problem, but a structural phenomenon — quantitatively documented.</p>
+      <p class="reveal" style="--i:2">Missed calls in restaurants are not an outlier problem, but a structural phenomenon - quantitatively documented.</p>
     </div>
 
     <div class="kpi-grid">
@@ -2117,7 +2117,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
         <div class="benefit-item reveal" style="--i:2">
           <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></div>
           <div class="benefit-body">
-            <strong>Never miss a reservation — even after closing time</strong>
+            <strong>Never miss a reservation - even after closing time</strong>
             <p>Guests can call and book anytime, even late at night or outside business hours.</p>
           </div>
         </div>
@@ -2126,7 +2126,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
           <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
           <div class="benefit-body">
             <strong>More bookings through complete call coverage</strong>
-            <p>Every call answered means no lost enquiries — and reservations that would have gone to competitors.</p>
+            <p>Every call answered means no lost enquiries - and reservations that would have gone to competitors.</p>
           </div>
         </div>
 
@@ -2142,7 +2142,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
           <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
           <div class="benefit-body">
             <strong>Handle peak times automatically</strong>
-            <p>During service, the assistant takes over — without you or your team having to answer the phone.</p>
+            <p>During service, the assistant takes over - without you or your team having to answer the phone.</p>
           </div>
         </div>
 
@@ -2150,7 +2150,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
           <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9 10h6"/><path d="M9 14h4"/></svg></div>
           <div class="benefit-body">
             <strong>Fewer no-shows with automatic SMS</strong>
-            <p>Guests automatically receive an SMS with their reservation details — on every channel, not just phone.</p>
+            <p>Guests automatically receive an SMS with their reservation details - on every channel, not just phone.</p>
           </div>
         </div>
 
@@ -2188,7 +2188,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
   </section>
 
-  <!-- ╔══════ Slide 4 · UC1 — Neue Reservierung ══════╗ -->
+  <!-- ╔══════ Slide 4 · UC1 - Neue Reservierung ══════╗ -->
   <section class="slide uc uc-3col concept-a" data-short>
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
@@ -2197,7 +2197,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
     <div class="uc-story">
       <div class="eyebrow reveal" style="--i:0">Use Case 1</div>
-      <h2 class="reveal" style="--i:1">Family calls in —<br>right table reserved.</h2>
+      <h2 class="reveal" style="--i:1">Family calls in -<br>right table reserved.</h2>
       <p class="uc-setup reveal" style="--i:2">
         Table for four at 6 PM requested. Preferred time fully booked. Gastrofon suggests a suitable alternative and saves the note.
       </p>
@@ -2277,7 +2277,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
   </section>
 
-  <!-- ╔══════ Slide 5 · UC2 — Reservierungs-Änderung ══════╗ -->
+  <!-- ╔══════ Slide 5 · UC2 - Reservierungs-Änderung ══════╗ -->
   <section class="slide uc uc-3col concept-b">
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
@@ -2364,7 +2364,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
   </section>
 
-  <!-- ╔══════ Slide 6 · UC3 — Stornierung ══════╗ -->
+  <!-- ╔══════ Slide 6 · UC3 - Stornierung ══════╗ -->
   <section class="slide uc uc-3col concept-c uc-no-demo">
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
@@ -2450,7 +2450,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
   </section>
 
-  <!-- ╔══════ Slide 7 · UC4 — Restaurant-FAQs ══════╗ -->
+  <!-- ╔══════ Slide 7 · UC4 - Restaurant-FAQs ══════╗ -->
   <section class="slide uc concept-d">
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
@@ -2506,7 +2506,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
   </section>
 
-  <!-- ╔══════ Slide 8 · UC5 — Gruppe + Mensch-Übergabe (Bonus) ══════╗ -->
+  <!-- ╔══════ Slide 8 · UC5 - Gruppe + Mensch-Übergabe (Bonus) ══════╗ -->
   <section class="slide uc concept-e" data-bonus>
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
@@ -2517,7 +2517,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
       <div class="eyebrow reveal" style="--i:0">Use Case 5</div>
       <h2 class="reveal" style="--i:1">Group booking?<br>A human takes over.</h2>
       <p class="uc-setup reveal" style="--i:2">
-        For complex requests — large groups, special wishes, or complaints — Gastrofon recognises the limit, gathers the key details, and hands off cleanly to staff. That's trust, not failure.
+        For complex requests - large groups, special wishes, or complaints - Gastrofon recognises the limit, gathers the key details, and hands off cleanly to staff. That's trust, not failure.
       </p>
       <ul class="uc-bullets">
         <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Request: 13 people, birthday celebration</li>
@@ -2681,7 +2681,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
 <script>
 (function(){
-  // ───── Stage skalieren — füllt Viewport exakt ─────
+  // ───── Stage skalieren - füllt Viewport exakt ─────
   const stage = document.getElementById('stage');
   function fitStage() {
     const w = document.documentElement.clientWidth;
@@ -2827,7 +2827,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     slide.querySelectorAll('.kpi-counter').forEach(el => {
       const target = parseFloat(el.dataset.target);
       const decimals = parseInt(el.dataset.decimals || '0', 10);
-      // Bei jedem Slide-Aufruf neu starten — auch beim Zurueckblaettern.
+      // Bei jedem Slide-Aufruf neu starten - auch beim Zurueckblaettern.
       // Vorherige requestAnimationFrame-Loop via Generation-Token entwerten.
       const gen = (parseInt(el.dataset.gen || '0', 10) + 1);
       el.dataset.gen = String(gen);
