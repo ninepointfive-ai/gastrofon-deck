@@ -1883,33 +1883,6 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 #nav-prev:hover, #nav-next:hover { background: rgba(17,27,10,.14); }
 #nav-prev svg, #nav-next svg { width: 22px; height: 22px; stroke: rgba(17,27,10,.55); }
 
-#btn-fullscreen {
-  display: none;
-  position: fixed;
-  top: 14px;
-  right: 14px;
-  z-index: 9999;
-  width: 36px; height: 36px;
-  background: rgba(255,255,255,.18);
-  border: 1px solid rgba(255,255,255,.32);
-  border-radius: 8px;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  transition: background .15s;
-  -webkit-tap-highlight-color: transparent;
-  padding: 0;
-  backdrop-filter: blur(4px);
-}
-#btn-fullscreen:hover { background: rgba(255,255,255,.30); }
-#btn-fullscreen svg { width: 16px; height: 16px; stroke: rgba(255,255,255,.9); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-#btn-fullscreen .icon-compress { display: none; }
-#btn-fullscreen.is-fullscreen .icon-expand  { display: none; }
-#btn-fullscreen.is-fullscreen .icon-compress { display: block; }
-@media (min-width: 1024px) {
-  #btn-fullscreen { display: flex; }
-}
-
 @media print {
   body { background: #fff; }
   .stage { transform: none; width: 100%; height: auto; }
@@ -2925,27 +2898,6 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   if (navPrev) navPrev.addEventListener('click', prev);
   if (navNext) navNext.addEventListener('click', next);
 
-  // ───── Vollbild-Button ─────
-  setTimeout(() => {
-    const btnFs = document.getElementById('btn-fullscreen');
-    if (!btnFs) return;
-
-    function toggleFullscreen() {
-      if (!document.fullscreenElement) {
-        (document.body.requestFullscreen || document.body.webkitRequestFullscreen).call(document.body);
-      } else {
-        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-      }
-    }
-
-    function updateFsIcon() {
-      btnFs.classList.toggle('is-fullscreen', !!document.fullscreenElement);
-    }
-
-    btnFs.addEventListener('click', toggleFullscreen);
-    document.addEventListener('fullscreenchange', updateFsIcon);
-  }, 0);
-
   // ───── Init ─────
   // Re-evaluate slides after variant filtering applies
   setTimeout(() => {
@@ -2962,11 +2914,6 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 </button>
 <button id="nav-next" aria-label="Nächste Slide">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-</button>
-
-<button id="btn-fullscreen" aria-label="Vollbild umschalten">
-  <svg class="icon-expand" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-  <svg class="icon-compress" viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
 </button>
 
 </body>
