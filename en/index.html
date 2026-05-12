@@ -1889,9 +1889,9 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   top: 14px;
   right: 14px;
   z-index: 9999;
-  width: 40px; height: 40px;
-  background: rgba(17,27,10,.07);
-  border: 1px solid rgba(17,27,10,.13);
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.32);
   border-radius: 8px;
   cursor: pointer;
   align-items: center;
@@ -1899,9 +1899,10 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   transition: background .15s;
   -webkit-tap-highlight-color: transparent;
   padding: 0;
+  backdrop-filter: blur(4px);
 }
-#btn-fullscreen:hover { background: rgba(17,27,10,.14); }
-#btn-fullscreen svg { width: 18px; height: 18px; stroke: rgba(17,27,10,.5); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#btn-fullscreen:hover { background: rgba(255,255,255,.30); }
+#btn-fullscreen svg { width: 16px; height: 16px; stroke: rgba(255,255,255,.9); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 #btn-fullscreen .icon-compress { display: none; }
 #btn-fullscreen.is-fullscreen .icon-expand  { display: none; }
 #btn-fullscreen.is-fullscreen .icon-compress { display: block; }
