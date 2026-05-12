@@ -2932,8 +2932,9 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   if (navNext) navNext.addEventListener('click', next);
 
   // ───── Fullscreen button ─────
-  const btnFs = document.getElementById('btn-fullscreen');
-  if (btnFs) {
+  setTimeout(() => {
+    const btnFs = document.getElementById('btn-fullscreen');
+    if (!btnFs) return;
     btnFs.addEventListener('click', () => {
       if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
       else document.exitFullscreen?.();
@@ -2941,7 +2942,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     document.addEventListener('fullscreenchange', () => {
       btnFs.classList.toggle('is-fullscreen', !!document.fullscreenElement);
     });
-  }
+  }, 0);
 
   // ───── Init ─────
   // Re-evaluate slides after variant filtering applies
