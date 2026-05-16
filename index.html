@@ -1909,140 +1909,6 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 </head>
 <body>
 
-<!-- ═══════════════════════ PASSWORD GATE ═══════════════════════ -->
-<div id="pw-gate">
-  <div id="pw-card">
-    <div id="pw-logo">
-      <div id="pw-logo-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
-      </div>
-      <span><span id="pw-logo-gastro">Gastro</span><span id="pw-logo-fon">fon</span></span>
-    </div>
-    <p id="pw-label">Zugangscode eingeben</p>
-    <div id="pw-input-wrap">
-      <input id="pw-input" type="password" placeholder="••••••" autocomplete="off" spellcheck="false">
-      <button id="pw-submit">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </button>
-    </div>
-    <p id="pw-error">Falscher Zugangscode</p>
-  </div>
-</div>
-
-<style>
-#pw-gate {
-  position: fixed; inset: 0; z-index: 999999;
-  background: #fff;
-  display: flex; align-items: center; justify-content: center;
-}
-#pw-card {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 20px; width: 100%; max-width: 380px; padding: 0 32px;
-}
-#pw-logo {
-  display: flex; align-items: center; gap: 16px;
-  font-size: 36px; letter-spacing: -0.02em; margin-bottom: 8px;
-}
-#pw-logo-icon {
-  width: 64px; height: 64px;
-  background: #8EB216;
-  border-radius: 18px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-#pw-logo-icon svg { width: 32px; height: 32px; color: #fff; }
-#pw-logo-gastro { color: #111b0a; font-weight: 700; }
-#pw-logo-fon { color: #8EB216; font-weight: 700; animation: pw-text-glow-green 3s ease-in-out infinite; }
-@keyframes pw-text-glow-white {
-  0%, 100% { text-shadow: 0 0 8px rgba(255,255,255,.18); }
-  50%       { text-shadow: 0 0 14px rgba(255,255,255,.32); }
-}
-@keyframes pw-text-glow-green {
-  0%, 100% { text-shadow: 0 0 8px rgba(142,178,22,.18); }
-  50%       { text-shadow: 0 0 14px rgba(142,178,22,.40); }
-}
-#pw-label {
-  margin: 0; color: rgba(17,27,10,.45);
-  font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase;
-}
-#pw-input-wrap {
-  display: flex; width: 100%;
-  background: rgba(17,27,10,.04);
-  border: 1px solid rgba(17,27,10,.12);
-  border-radius: 12px; overflow: hidden;
-  transition: border-color .15s;
-}
-#pw-input-wrap:focus-within { border-color: rgba(106,191,94,.5); }
-#pw-input {
-  flex: 1; background: none; border: none; outline: none;
-  padding: 14px 16px; color: #111b0a; font-size: 18px;
-  letter-spacing: 0.15em; font-family: inherit;
-}
-#pw-input::placeholder { color: rgba(17,27,10,.3); letter-spacing: 0; }
-#pw-submit {
-  background: none; border: none; cursor: pointer;
-  padding: 0 16px; color: rgba(17,27,10,.35);
-  display: flex; align-items: center; transition: color .15s;
-}
-#pw-submit:hover { color: #8EB216; }
-#pw-submit svg { width: 20px; height: 20px; }
-#pw-error {
-  margin: 0; color: #e05a5a; font-size: 13px;
-  opacity: 0; transition: opacity .2s; height: 16px;
-}
-#pw-gate.shake #pw-card { animation: pwShake .35s ease; }
-@keyframes pwShake {
-  0%,100% { transform: translateX(0); }
-  20%      { transform: translateX(-8px); }
-  60%      { transform: translateX(8px); }
-}
-</style>
-
-<script>
-(function(){
-  const gate  = document.getElementById('pw-gate');
-  const input = document.getElementById('pw-input');
-  const err   = document.getElementById('pw-error');
-  const isSmallScreen = () => window.innerWidth < 1024;
-  const getMobileGate = () => document.getElementById('mobile-gate');
-
-  // Phones + Tablets: Login überspringen, sofort Hinweis zeigen
-  if (isSmallScreen()) {
-    gate.style.display = 'none';
-    const showMG = () => { const mg = getMobileGate(); if (mg) mg.style.display = 'flex'; };
-    document.readyState !== 'loading' ? showMG() : document.addEventListener('DOMContentLoaded', showMG);
-    return;
-  }
-
-  // Desktop: normaler Auth-Flow
-  function showAfterAuth() {
-    gate.style.transition = 'opacity .4s';
-    gate.style.opacity = '0';
-    setTimeout(() => { gate.style.display = 'none'; }, 400);
-  }
-
-  if (sessionStorage.getItem('npf_auth') === '1') {
-    gate.style.display = 'none';
-    return;
-  }
-
-  function check() {
-    if (input.value.trim().toUpperCase() === 'NPF') {
-      sessionStorage.setItem('npf_auth', '1');
-      showAfterAuth();
-    } else {
-      err.style.opacity = '1';
-      gate.classList.remove('shake');
-      void gate.offsetWidth;
-      gate.classList.add('shake');
-      input.value = '';
-      setTimeout(() => err.style.opacity = '0', 2000);
-    }
-  }
-  document.getElementById('pw-submit').addEventListener('click', check);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
-})();
-</script>
 
 <div id="progress-track"><div id="progress-bar"></div></div>
 
@@ -2936,6 +2802,12 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   const navNext = document.getElementById('nav-next');
   if (navPrev) navPrev.addEventListener('click', prev);
   if (navNext) navNext.addEventListener('click', next);
+
+  // ───── Click navigation (linke Hälfte = zurück, rechte Hälfte = vor) ─────
+  document.querySelector('.stage').addEventListener('click', e => {
+    if (e.target.closest('button, a, input, audio, select, textarea, [role="button"]')) return;
+    if (e.clientX < window.innerWidth / 2) prev(); else next();
+  });
 
   // ───── Init ─────
   // Re-evaluate slides after variant filtering applies
