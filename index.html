@@ -1469,6 +1469,10 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 /* ───────── Variant: short — hide non-short slides ───────── */
 body[data-variant="short"] .slide:not([data-short]) { display: none !important; }
 
+/* ───────── Variant: extended — Web-App-Slides nur mit ?variant=extended ───────── */
+.slide[data-extended] { display: none !important; }
+body[data-variant="extended"] .slide[data-extended] { display: flex !important; }
+
 /* Bonus visibility */
 body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
@@ -1898,6 +1902,152 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 #nav-next { right: 14px; }
 #nav-prev:hover, #nav-next:hover { background: rgba(17,27,10,.14); }
 #nav-prev svg, #nav-next svg { width: 22px; height: 22px; stroke: rgba(17,27,10,.55); }
+
+/* ═══════════════════════════════════════════════════════
+   WEB-APP-SLIDES (erweiterte Variante) — echter Screenshot
+   im Browser-Rahmen + Callout-Sprechblasen
+   ═══════════════════════════════════════════════════════ */
+.webapp {
+  background: var(--brand-ghost);
+  align-items: center;
+  padding-top: 86px;
+  padding-bottom: 78px;
+}
+.webapp .webapp-head {
+  width: 100%;
+  max-width: 1480px;
+  text-align: center;
+}
+.webapp .eyebrow { margin-bottom: 14px; }
+.webapp-h2 {
+  font-size: 58px;
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+  font-weight: 600;
+  color: var(--ink);
+}
+.webapp-h2 strong { color: var(--gastro); font-weight: 700; }
+.webapp-sub {
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin: 16px auto 0;
+  max-width: 1040px;
+}
+.browser-frame {
+  margin-top: 34px;
+  width: 1340px;
+  max-width: 100%;
+  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  background: var(--canvas);
+  border-bottom: 1px solid var(--hair);
+}
+.browser-bar .bdot {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: #d6d6df; flex-shrink: 0;
+}
+.browser-bar .bdot:nth-child(1) { background: #ec6a5e; }
+.browser-bar .bdot:nth-child(2) { background: #f4be4f; }
+.browser-bar .bdot:nth-child(3) { background: #61c454; }
+.browser-bar .browser-url {
+  margin-left: 14px;
+  flex: 1;
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 7px;
+  padding: 6px 16px;
+  font-size: 13px;
+  color: var(--mute);
+  letter-spacing: 0.02em;
+  max-width: 460px;
+}
+.browser-shot {
+  position: relative;
+  aspect-ratio: 2538 / 1237;
+  background: var(--canvas);
+}
+.browser-shot img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+.callout {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px;
+  background: var(--gastro);
+  color: #fff;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(10,122,91,.34);
+  white-space: nowrap;
+  z-index: 2;
+}
+.callout::before {
+  content: "";
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+}
+.callout.brand {
+  background: var(--brand);
+  box-shadow: 0 10px 28px rgba(123,163,14,.34);
+}
+.callout.point-bl::after,
+.callout.point-br::after,
+.callout.point-tl::after,
+.callout.point-tr::after {
+  content: "";
+  position: absolute;
+  width: 13px; height: 13px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+.callout.point-bl::after { left: 22px;  bottom: -5px; }
+.callout.point-br::after { right: 22px; bottom: -5px; }
+.callout.point-tl::after { left: 22px;  top: -5px; }
+.callout.point-tr::after { right: 22px; top: -5px; }
+.webapp-cap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 26px;
+  font-size: 18px;
+  color: var(--ink-soft);
+}
+.webapp-cap span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 500;
+}
+.webapp-cap span::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gastro);
+}
+.webapp-cap .sep { color: var(--hair); font-weight: 400; }
+.webapp-cap .sep::before { display: none; }
 
 @media print {
   body { background: #fff; }
@@ -2524,6 +2674,111 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
   </section>
 
+  <!-- ╔══════ Web-App 1 · Dashboard (nur ?variant=extended) ══════╗ -->
+  <section class="slide webapp" data-extended>
+    <div class="slide-chrome">
+      <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
+      <div class="slide-tag"><span class="pill">Das Produkt</span></div>
+    </div>
+
+    <div class="webapp-head">
+      <div class="eyebrow gastro reveal" style="--i:0">Die Web-App · Live-Dashboard</div>
+      <h2 class="webapp-h2 reveal" style="--i:1">Jeder Anruf wird zur <strong>messbaren Zahl</strong></h2>
+      <p class="webapp-sub reveal" style="--i:2">Reservierungen, Anrufvolumen und Gesprächszeit in Echtzeit, statt Bauchgefühl. Der Wirt sieht schwarz auf weiß, was sonst unbeantwortet verloren ginge.</p>
+    </div>
+
+    <figure class="browser-frame reveal" style="--i:3">
+      <div class="browser-bar">
+        <span class="bdot"></span><span class="bdot"></span><span class="bdot"></span>
+        <span class="browser-url">app.gastrofon.de/dashboard</span>
+      </div>
+      <div class="browser-shot">
+        <img src="assets/webapp/dashboard.png" alt="Gastrofon Dashboard — Übersicht mit Kennzahlen, Anrufverlaufskurve und Anruftypen">
+        <span class="callout point-bl reveal" style="--i:4; top:4%; left:27%">466 Reservierungen ohne Personal</span>
+        <span class="callout brand point-bl reveal" style="--i:5; top:45%; right:3%">Anruftypen auf einen Blick</span>
+      </div>
+    </figure>
+
+    <div class="webapp-cap reveal" style="--i:6">
+      <span>Messbarer ROI</span><span class="sep">·</span><span>Kein Blackbox-Agent</span><span class="sep">·</span><span>Volumen sichtbar gemacht</span>
+    </div>
+
+    <div class="slide-footer">
+      <span>ninepointfive.ai · Gastrofon · Web App</span>
+      <span class="page-counter">09 / 12</span>
+    </div>
+  </section>
+
+  <!-- ╔══════ Web-App 2 · Anrufverlauf (nur ?variant=extended) ══════╗ -->
+  <section class="slide webapp" data-extended>
+    <div class="slide-chrome">
+      <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
+      <div class="slide-tag"><span class="pill">Das Produkt</span></div>
+    </div>
+
+    <div class="webapp-head">
+      <div class="eyebrow gastro reveal" style="--i:0">Die Web-App · Anrufverlauf</div>
+      <h2 class="webapp-h2 reveal" style="--i:1">Lückenlose <strong>Nachvollziehbarkeit</strong>, Anruf für Anruf</h2>
+      <p class="webapp-sub reveal" style="--i:2">Jeder eingegangene Anruf mit Anliegen-Typ, KI-Zusammenfassung und Dauer, filterbar nach Zeitraum und Anliegen. Nichts verschwindet im Nichts.</p>
+    </div>
+
+    <figure class="browser-frame reveal" style="--i:3">
+      <div class="browser-bar">
+        <span class="bdot"></span><span class="bdot"></span><span class="bdot"></span>
+        <span class="browser-url">app.gastrofon.de/anrufverlauf</span>
+      </div>
+      <div class="browser-shot">
+        <img src="assets/webapp/anrufverlauf.png" alt="Gastrofon Anrufverlauf — Liste aller Anrufe mit Typ, Zusammenfassung und Dauer">
+        <span class="callout point-bl reveal" style="--i:4; top:4%; left:30%">Filter nach Anliegen &amp; Zeitraum</span>
+        <span class="callout brand point-tl reveal" style="--i:5; bottom:7%; left:32%">KI fasst jedes Gespräch zusammen</span>
+      </div>
+    </figure>
+
+    <div class="webapp-cap reveal" style="--i:6">
+      <span>Nichts geht verloren</span><span class="sep">·</span><span>Sofort durchsuchbar</span><span class="sep">·</span><span>Kontrolle beim Wirt</span>
+    </div>
+
+    <div class="slide-footer">
+      <span>ninepointfive.ai · Gastrofon · Web App</span>
+      <span class="page-counter">10 / 12</span>
+    </div>
+  </section>
+
+  <!-- ╔══════ Web-App 3 · Anrufdetail (nur ?variant=extended) ══════╗ -->
+  <section class="slide webapp" data-extended>
+    <div class="slide-chrome">
+      <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
+      <div class="slide-tag"><span class="pill">Das Produkt</span></div>
+    </div>
+
+    <div class="webapp-head">
+      <div class="eyebrow gastro reveal" style="--i:0">Die Web-App · Anrufdetail</div>
+      <h2 class="webapp-h2 reveal" style="--i:1">Aufnahme und Transkript, <strong>volle Transparenz</strong></h2>
+      <p class="webapp-sub reveal" style="--i:2">Zu jedem Anruf: KI-Zusammenfassung, abspielbare Original-Aufnahme und das komplette Gespräch Wort für Wort. Qualität jederzeit überprüfbar.</p>
+    </div>
+
+    <figure class="browser-frame reveal" style="--i:3">
+      <div class="browser-bar">
+        <span class="bdot"></span><span class="bdot"></span><span class="bdot"></span>
+        <span class="browser-url">app.gastrofon.de/anrufverlauf · Anrufdetails</span>
+      </div>
+      <div class="browser-shot">
+        <img src="assets/webapp/anrufdetail.png" alt="Gastrofon Anrufdetail — Zusammenfassung, Gesprächsaufnahme und vollständiges Transkript">
+        <span class="callout point-bl reveal" style="--i:4; top:50%; left:24%">Original-Aufnahme abspielbar</span>
+        <span class="callout brand point-tl reveal" style="--i:5; bottom:6%; left:30%">Wort-für-Wort-Transkript</span>
+      </div>
+    </figure>
+
+    <div class="webapp-cap reveal" style="--i:6">
+      <span>Vertrauen statt Blackbox</span><span class="sep">·</span><span>Qualität prüfbar</span><span class="sep">·</span><span>Konfiguration im selben Cockpit</span>
+    </div>
+
+    <div class="slide-footer">
+      <span>ninepointfive.ai · Gastrofon · Web App</span>
+      <span class="page-counter">11 / 12</span>
+    </div>
+  </section>
+
   <!-- ╔══════ Slide 9 · Verabschiedung ══════╗ -->
   <section class="slide outro" data-short>
     <div class="outro-bg" aria-hidden="true"></div>
@@ -2669,6 +2924,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   // ───── Variant + Bonus from query string ─────
   const qs = new URLSearchParams(location.search);
   if (qs.get('variant') === 'short') document.body.dataset.variant = 'short';
+  if (qs.get('variant') === 'extended') document.body.dataset.variant = 'extended';
   if (qs.get('bonus') === 'off')      document.body.dataset.bonus = 'off';
 
   // ───── Demo number + QR substitution ─────
@@ -2909,6 +3165,12 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     const visible = Array.from(document.querySelectorAll('.slide')).filter(s => getComputedStyle(s).display !== 'none');
     slides.length = 0;
     visible.forEach(s => slides.push(s));
+    // Page-Counter dynamisch an die aktive Variante anpassen (NN / Gesamt)
+    const total = String(visible.length).padStart(2, '0');
+    visible.forEach((s, i) => {
+      const pc = s.querySelector('.page-counter');
+      if (pc) pc.textContent = String(i + 1).padStart(2, '0') + ' / ' + total;
+    });
     activate(0);
   }, 0);
 })();
