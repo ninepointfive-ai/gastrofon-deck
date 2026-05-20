@@ -2053,9 +2053,19 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 /* ── Touch devices: disable Ken Burns animation ── */
 @media (hover: none) and (pointer: coarse) {
   .cover-bg, .outro-bg {
-    animation: none;
-    will-change: auto;
+    animation: none !important;
+    will-change: auto !important;
+    transform: none !important;
+    inset: 0 !important;
   }
+}
+/* JS fallback via body.is-touch */
+body.is-touch .cover-bg,
+body.is-touch .outro-bg {
+  animation: none !important;
+  will-change: auto !important;
+  transform: none !important;
+  inset: 0 !important;
 }
 </style>
 </head>
@@ -2830,6 +2840,11 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
 <script>
 (function(){
+  // ───── Touch devices: static background images ─────
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    document.body.classList.add('is-touch');
+  }
+
   // ───── Stage skalieren - füllt Viewport exakt ─────
   const stage = document.getElementById('stage');
   function fitStage() {

@@ -2008,9 +2008,19 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 /* ── Touch-Geräte: Ken-Burns-Animation deaktivieren ── */
 @media (hover: none) and (pointer: coarse) {
   .cover-bg, .outro-bg {
-    animation: none;
-    will-change: auto;
+    animation: none !important;
+    will-change: auto !important;
+    transform: none !important;
+    inset: 0 !important;
   }
+}
+/* JS-Fallback via body.is-touch */
+body.is-touch .cover-bg,
+body.is-touch .outro-bg {
+  animation: none !important;
+  will-change: auto !important;
+  transform: none !important;
+  inset: 0 !important;
 }
 </style>
 </head>
@@ -2776,6 +2786,11 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
 <script>
 (function(){
+  // ───── Touch-Geräte: statische Hintergrundbilder ─────
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    document.body.classList.add('is-touch');
+  }
+
   // ───── Stage skalieren — füllt Viewport exakt ─────
   const stage = document.getElementById('stage');
   function fitStage() {
