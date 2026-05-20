@@ -17,7 +17,9 @@
   --ink:         #1A1A2E;
   --ink-soft:    #444455;
   --mute:        #7A7A88;
-  --hair:        rgba(255,255,255,.08);
+  --hair:        #E6E6EC;
+  --canvas:      #F7F7FA;
+  --paper:       #FFFFFF;
   --font: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -26,10 +28,9 @@
 html, body {
   width: 100%; height: 100%;
   font-family: var(--font);
-  background: var(--ink);
-  color: #fff;
+  background: var(--canvas);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
 }
 
 body {
@@ -38,16 +39,16 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 32px 24px;
+  padding: 40px 24px;
   overflow: auto;
 }
 
-/* ── Subtle radial glow behind content ── */
+/* ── Subtle radial tint ── */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(123,163,14,.10) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(123,163,14,.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -56,17 +57,17 @@ body::before {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .logo-icon {
-  width: 48px; height: 48px;
+  width: 50px; height: 50px;
   background: linear-gradient(135deg, var(--brand-dark), var(--brand-light));
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 24px rgba(155,202,26,.25);
+  box-shadow: 0 4px 16px rgba(78,105,8,.22);
   flex-shrink: 0;
 }
 
@@ -82,17 +83,17 @@ body::before {
   line-height: 1;
 }
 
-.logo-text .gastro { color: #fff; }
-.logo-text .fon    { color: var(--brand-light); }
+.logo-text .gastro { color: var(--ink); }
+.logo-text .fon    { color: var(--brand); }
 
 /* ── Tagline ── */
 .tagline {
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 500;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--mute);
-  margin-bottom: 52px;
+  margin-bottom: 48px;
 }
 
 /* ── Cards ── */
@@ -100,7 +101,7 @@ body::before {
   display: flex;
   gap: 20px;
   width: 100%;
-  max-width: 560px;
+  max-width: 540px;
 }
 
 .card {
@@ -108,42 +109,40 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 36px 28px 32px;
-  background: rgba(255,255,255,.04);
+  gap: 14px;
+  padding: 36px 28px 30px;
+  background: var(--paper);
   border: 1.5px solid var(--hair);
   border-radius: 20px;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+  box-shadow: 0 2px 8px rgba(26,26,46,.05), 0 8px 24px rgba(26,26,46,.04);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   position: relative;
   overflow: hidden;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  background: rgba(255,255,255,.07);
-  border-color: rgba(155,202,26,.35);
-  box-shadow: 0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(155,202,26,.20);
+  transform: translateY(-4px);
+  border-color: rgba(123,163,14,.40);
+  box-shadow: 0 8px 24px rgba(26,26,46,.09), 0 20px 48px rgba(26,26,46,.07), 0 0 0 1px rgba(123,163,14,.18);
 }
 
-.card:active {
-  transform: translateY(-1px);
-}
+.card:active { transform: translateY(-2px); }
 
 /* Highlighted card (auto-detected language) */
 .card.is-hint {
-  border-color: rgba(123,163,14,.50);
-  background: rgba(123,163,14,.07);
-  box-shadow: 0 0 0 1px rgba(123,163,14,.25), 0 8px 32px rgba(0,0,0,.25);
+  border-color: rgba(123,163,14,.45);
+  box-shadow: 0 2px 8px rgba(26,26,46,.05), 0 8px 24px rgba(26,26,46,.04), 0 0 0 1px rgba(123,163,14,.20);
 }
 
 .card.is-hint:hover {
-  border-color: rgba(155,202,26,.70);
-  box-shadow: 0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(155,202,26,.40);
+  border-color: rgba(123,163,14,.65);
+  box-shadow: 0 8px 24px rgba(26,26,46,.09), 0 20px 48px rgba(26,26,46,.07), 0 0 0 1px rgba(123,163,14,.35);
 }
 
+/* ── Recommended badge ── */
 .hint-badge {
   position: absolute;
   top: 14px; right: 14px;
@@ -151,9 +150,9 @@ body::before {
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--brand-light);
-  background: rgba(155,202,26,.15);
-  border: 1px solid rgba(155,202,26,.30);
+  color: var(--brand-dark);
+  background: rgba(123,163,14,.12);
+  border: 1px solid rgba(123,163,14,.28);
   border-radius: 6px;
   padding: 3px 8px;
   opacity: 0;
@@ -162,15 +161,23 @@ body::before {
 
 .card.is-hint .hint-badge { opacity: 1; }
 
+/* ── Flag SVG wrapper ── */
 .card-flag {
-  font-size: 42px;
-  line-height: 1;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.3));
+  width: 64px;
+  height: 43px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(26,26,46,.15), 0 0 0 1px rgba(26,26,46,.08);
+  flex-shrink: 0;
 }
 
+.card-flag svg { display: block; width: 100%; height: 100%; }
+
+/* ── Card text ── */
 .card-lang {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700;
+  color: var(--ink);
   letter-spacing: -.2px;
 }
 
@@ -183,12 +190,12 @@ body::before {
 }
 
 .card-cta {
-  margin-top: 8px;
+  margin-top: 6px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: var(--brand-light);
+  color: var(--brand);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -205,21 +212,16 @@ body::before {
 .footer {
   margin-top: 44px;
   font-size: 12px;
-  color: rgba(255,255,255,.20);
+  color: var(--mute);
   letter-spacing: .04em;
+  opacity: .6;
 }
 
 /* ── Mobile ── */
 @media (max-width: 480px) {
-  .cards {
-    flex-direction: column;
-    max-width: 320px;
-  }
-
-  .tagline { margin-bottom: 36px; }
-
-  .card { padding: 28px 24px 24px; }
-
+  .cards { flex-direction: column; max-width: 300px; }
+  .tagline { margin-bottom: 32px; }
+  .card { padding: 28px 24px 24px; gap: 12px; }
   .logo-text { font-size: 26px; }
 }
 </style>
@@ -243,9 +245,20 @@ body::before {
 <p class="tagline">Produktvorstellung &middot; Product Presentation</p>
 
 <div class="cards">
+
+  <!-- DE -->
   <a class="card" id="card-de" href="#" onclick="navigate('de'); return false;">
     <span class="hint-badge">Empfohlen</span>
-    <span class="card-flag">🇩🇪</span>
+
+    <div class="card-flag">
+      <!-- Germany: black / red / gold -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3">
+        <rect width="5" height="1" y="0" fill="#000000"/>
+        <rect width="5" height="1" y="1" fill="#CC0000"/>
+        <rect width="5" height="1" y="2" fill="#FFCE00"/>
+      </svg>
+    </div>
+
     <span class="card-lang">Deutsch</span>
     <span class="card-label">Präsentation auf Deutsch</span>
     <span class="card-cta">
@@ -256,9 +269,29 @@ body::before {
     </span>
   </a>
 
+  <!-- EN -->
   <a class="card" id="card-en" href="#" onclick="navigate('en'); return false;">
     <span class="hint-badge">Recommended</span>
-    <span class="card-flag">🇬🇧</span>
+
+    <div class="card-flag">
+      <!-- United Kingdom: Union Jack -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 36">
+        <rect width="60" height="36" fill="#012169"/>
+        <!-- White saltire (St Andrew) -->
+        <line x1="0" y1="0" x2="60" y2="36" stroke="#fff" stroke-width="8"/>
+        <line x1="60" y1="0" x2="0" y2="36" stroke="#fff" stroke-width="8"/>
+        <!-- Red saltire (St Patrick, counterchanged) — simplified -->
+        <line x1="0" y1="0" x2="60" y2="36" stroke="#C8102E" stroke-width="4.5"/>
+        <line x1="60" y1="0" x2="0" y2="36" stroke="#C8102E" stroke-width="4.5"/>
+        <!-- White cross (St George) -->
+        <rect x="0" y="13.5" width="60" height="9" fill="#fff"/>
+        <rect x="25.5" y="0" width="9" height="36" fill="#fff"/>
+        <!-- Red cross (St George) -->
+        <rect x="0" y="15.5" width="60" height="5" fill="#C8102E"/>
+        <rect x="27.5" y="0" width="5" height="36" fill="#C8102E"/>
+      </svg>
+    </div>
+
     <span class="card-lang">English</span>
     <span class="card-label">Presentation in English</span>
     <span class="card-cta">
@@ -268,29 +301,23 @@ body::before {
       </svg>
     </span>
   </a>
+
 </div>
 
-<p class="footer">ninepointfive AI &mdash; gastrofon.de</p>
+<p class="footer">ninepointfive AI</p>
 
 <script>
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
     || (window.innerWidth < 768 && 'ontouchstart' in window);
 
-  const lang = (navigator.language || 'de').toLowerCase();
-  const preferEN = lang.startsWith('en');
+  const preferEN = (navigator.language || 'de').toLowerCase().startsWith('en');
 
-  if (preferEN) {
-    document.getElementById('card-en').classList.add('is-hint');
-  } else {
-    document.getElementById('card-de').classList.add('is-hint');
-  }
+  document.getElementById(preferEN ? 'card-en' : 'card-de').classList.add('is-hint');
 
   function navigate(choice) {
-    if (choice === 'de') {
-      window.location.href = isMobile ? '../mobile/' : '../';
-    } else {
-      window.location.href = isMobile ? '../en-mobile/' : '../en/';
-    }
+    window.location.href = choice === 'de'
+      ? (isMobile ? '../mobile/?variant=extended' : '../?variant=extended')
+      : (isMobile ? '../en-mobile/?variant=extended' : '../en/?variant=extended');
   }
 </script>
 
