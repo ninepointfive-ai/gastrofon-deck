@@ -5,6 +5,7 @@
 <title>Gastrofon · Product Overview - ninepointfive AI</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%238EB216'/%3E%3Cg stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' fill='none' transform='translate(4,4)'%3E%3Cpath d='M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2'/%3E%3Cpath d='M7 2v20'/%3E%3Cpath d='M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7'/%3E%3C/g%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if('ontouchstart'in window||navigator.maxTouchPoints>0)document.documentElement.classList.add('is-touch');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&display=swap">
@@ -2050,22 +2051,21 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   #rotate-blocker { display: flex; }
 }
 
-/* ── Touch devices: disable Ken Burns animation ── */
-@media (hover: none) and (pointer: coarse) {
-  .cover-bg, .outro-bg {
-    animation: none !important;
-    will-change: auto !important;
-    transform: none !important;
-    inset: 0 !important;
-  }
+/* ── Touch devices: background directly on slide element (no compositing layer) ── */
+html.is-touch .cover-bg,
+html.is-touch .outro-bg { display: none !important; }
+
+html.is-touch .cover {
+  background-color: #060d04 !important;
+  background-image: url('../assets/cover-bg.jpg') !important;
+  background-size: cover !important;
+  background-position: 90% 85% !important;
 }
-/* JS fallback via body.is-touch */
-body.is-touch .cover-bg,
-body.is-touch .outro-bg {
-  animation: none !important;
-  will-change: auto !important;
-  transform: none !important;
-  inset: 0 !important;
+html.is-touch .outro {
+  background-color: #060d04 !important;
+  background-image: url('../assets/outro-bg.jpg') !important;
+  background-size: cover !important;
+  background-position: center 40% !important;
 }
 </style>
 </head>
@@ -2840,11 +2840,6 @@ body.is-touch .outro-bg {
 
 <script>
 (function(){
-  // ───── Touch devices: static background images ─────
-  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-    document.body.classList.add('is-touch');
-  }
-
   // ───── Stage skalieren - füllt Viewport exakt ─────
   const stage = document.getElementById('stage');
   function fitStage() {
