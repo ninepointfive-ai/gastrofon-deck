@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Gastrofon · Produktvorstellung — ninepointfive AI</title>
+<title>Gastrofon · Product Overview - ninepointfive AI</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%238EB216'/%3E%3Cg stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' fill='none' transform='translate(4,4)'%3E%3Cpath d='M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2'/%3E%3Cpath d='M7 2v20'/%3E%3Cpath d='M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7'/%3E%3C/g%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#6C5CE7">
@@ -91,7 +91,7 @@ body {
   border-radius: 0 2px 2px 0;
 }
 
-/* Stage fix im Viewport zentriert — Skalierung via JS (window.innerWidth/Height) */
+/* Stage fix im Viewport zentriert - Skalierung via JS (window.innerWidth/Height) */
 .stage {
   position: fixed;
   top: 50%;
@@ -310,7 +310,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   100% { transform: scale(1.22) translate(2.2%, 1.6%); }
 }
 /* Kontinuierliche Kamerafahrt: läuft als Schleife durch, ohne sichtbaren Reset.
-   End-Zustand entspricht Start-Zustand — der Übergang ist unsichtbar weich. */
+   End-Zustand entspricht Start-Zustand - der Übergang ist unsichtbar weich. */
 @keyframes ken-burns-cinema {
   0%    { transform: scale(1.12) translate(-5.6%, -5.6%) rotate(-0.18deg); }
   25%   { transform: scale(1.16) translate(-4.4%, -4.4%) rotate(-0.05deg); }
@@ -352,15 +352,19 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 }
 
 /* ───────── MOBILE OOM-FIX ─────────
-   1. Animationen auf inaktiven Slides pausieren (sind nur opacity:0, kein
-      display:none — sonst laufen alle Infinite-Animationen parallel weiter).
-   2. Auf Phones/Touch-Devices die schweren cinema/glint Hintergründe aus.
+   1. Pause animations on inactive slides (they are only opacity:0, not
+      display:none — otherwise all infinite animations keep running).
+   2. On phones / touch devices, disable heavy cinema/glint background
+      animations entirely — iOS Safari kills the tab otherwise.
 */
 .slide:not(.is-active),
 .slide:not(.is-active) *,
 .slide:not(.is-active) *::before,
 .slide:not(.is-active) *::after {
   animation-play-state: paused !important;
+}
+@media (orientation: portrait) and (max-width: 1024px) {
+  #mobile-gate { display: flex !important; }
 }
 @media (max-width: 768px), (pointer: coarse) {
   .cover-bg,
@@ -373,20 +377,8 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   /* Clean black frame around the slide on mobile */
   html, body { background: #000 !important; }
   .stage { background: #000; }
-  /* Landscape-Gate: bei Hochformat auf kleinen Devices das Gate zeigen.
-     Dreht der User das Handy quer → Media-Query matched nicht mehr →
-     #mobile-gate fällt zurück auf seine baseline display:none. */
-}
-@media (orientation: portrait) and (max-width: 1024px) {
-  #mobile-gate { display: flex !important; }
-}
-@media (max-width: 768px), (pointer: coarse) {
-  /* Inactive slides: skip rendering without changing computed display.
-     The nav JS filters out display:none at init time — so we must NOT
-     use display:none, or only the first slide would be navigable.
-     content-visibility:hidden + contain:strict give the browser enough
-     info to skip rasterizing these subtrees during pinch-zoom while
-     keeping computed display intact for the JS filter. */
+  /* Skip rendering inactive slides without changing computed display
+     (the nav JS filters display:none at init — see below). */
   .slide:not(.is-active) {
     content-visibility: hidden;
     contain: strict;
@@ -416,14 +408,14 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url('assets/cover-bg.jpg');
+  background-image: url('../assets/cover-bg.jpg');
   background-size: cover;
   background-position: 90% 85%;
   /* Cinematischer Drift: nicht alternate, sondern kontinuierliche Schleife mit
-     leichter Rotation und mehrstufigem Pfad — wirkt wie eine Kamerafahrt. */
+     leichter Rotation und mehrstufigem Pfad - wirkt wie eine Kamerafahrt. */
   animation: ken-burns-cinema 28s cubic-bezier(.45,.05,.55,.95) infinite;
 }
-/* Subtiler warmer Glanz, der diagonal driftet — wie Kerzenlicht, das durchs Bild wandert */
+/* Subtiler warmer Glanz, der diagonal driftet - wie Kerzenlicht, das durchs Bild wandert */
 .cover-glint {
   position: absolute;
   inset: 0;
@@ -443,10 +435,10 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   background:
     /* Lese-Lane links für Header/Content-Lesbarkeit, rechts deutlich heller */
     linear-gradient(110deg, rgba(5,12,3,.74) 0%, rgba(5,12,3,.42) 45%, rgba(5,12,3,.10) 100%),
-    /* Sanfte Vignette oben/unten — rechts freundlicher */
+    /* Sanfte Vignette oben/unten - rechts freundlicher */
     linear-gradient(180deg, rgba(5,12,3,.26) 0%, transparent 20%, transparent 80%, rgba(5,12,3,.34) 100%);
 }
-/* Chrome bleibt position:absolute (aus Basis-Styles) — nur z-index oben halten */
+/* Chrome bleibt position:absolute (aus Basis-Styles) - nur z-index oben halten */
 .cover .slide-chrome,
 .cover .slide-footer { z-index: 3; }
 .cover-content { position: relative; z-index: 3; }
@@ -474,18 +466,18 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 .cover-logo-icon {
   width: 80px;
   height: 80px;
-  background: var(--brand);
+  background: #8EB216;
   border-radius: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 0 18px rgba(155,202,26,.55), 0 0 48px rgba(123,163,14,.35), 0 4px 20px rgba(123,163,14,.4);
+  box-shadow: 0 0 18px rgba(142,178,22,.55), 0 0 48px rgba(112,150,12,.35), 0 4px 20px rgba(112,150,12,.4);
   animation: logo-glow 3s ease-in-out infinite;
 }
 @keyframes logo-glow {
-  0%, 100% { box-shadow: 0 0 10px rgba(155,202,26,.30), 0 4px 16px rgba(123,163,14,.25); }
-  50%       { box-shadow: 0 0 18px rgba(155,202,26,.48), 0 4px 20px rgba(123,163,14,.35); }
+  0%, 100% { box-shadow: 0 0 10px rgba(142,178,22,.30), 0 4px 16px rgba(112,150,12,.25); }
+  50%       { box-shadow: 0 0 18px rgba(142,178,22,.48), 0 4px 20px rgba(112,150,12,.35); }
 }
 .cover-logo-icon svg { width: 40px; height: 40px; color: #fff; }
 .cover-logo-text {
@@ -499,7 +491,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   animation: logo-text-glow-white 3s ease-in-out infinite;
 }
 .cover-logo-fon {
-  color: var(--brand);
+  color: #8EB216;
   animation: logo-text-glow-green 3s ease-in-out infinite;
 }
 @keyframes logo-text-glow-white {
@@ -507,8 +499,8 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   50%       { text-shadow: 0 0 14px rgba(255,255,255,.32); }
 }
 @keyframes logo-text-glow-green {
-  0%, 100% { text-shadow: 0 0 8px rgba(155,202,26,.22); }
-  50%       { text-shadow: 0 0 14px rgba(155,202,26,.40); }
+  0%, 100% { text-shadow: 0 0 8px rgba(142,178,22,.22); }
+  50%       { text-shadow: 0 0 14px rgba(142,178,22,.40); }
 }
 .cover-title {
   font-size: 128px;
@@ -761,7 +753,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 56px;
+  gap: 48px;
 }
 .benefit-item {
   display: flex;
@@ -769,8 +761,8 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   gap: 24px;
 }
 .benefit-icon {
-  flex: 0 0 52px;
-  width: 52px; height: 52px;
+  flex: 0 0 54px;
+  width: 54px; height: 54px;
   border-radius: 14px;
   background: var(--brand-light);
   color: var(--brand);
@@ -778,16 +770,16 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   align-items: center;
   justify-content: center;
 }
-.benefit-icon svg { width: 26px; height: 26px; }
+.benefit-icon svg { width: 28px; height: 28px; }
 .benefit-body strong {
   display: block;
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 600;
   color: var(--ink);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 .benefit-body p {
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.45;
   color: var(--ink-soft);
   margin: 0;
@@ -880,13 +872,13 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 .slide-sources a:hover { color: var(--ink-soft); }
 .kpi-source sup, .metric-src sup { font-size: 10px; }
 
-/* Icon-Farb-Cycling — UC-Bullet-Icons */
+/* Icon-Farb-Cycling - UC-Bullet-Icons */
 .uc-bullets li:nth-child(4n+1) .bullet-icon { background: var(--brand-light);   color: var(--brand); }
 .uc-bullets li:nth-child(4n+2) .bullet-icon { background: #FDF3E3;              color: #C27A14; }
 .uc-bullets li:nth-child(4n+3) .bullet-icon { background: var(--gastro-light);  color: var(--gastro-dark); }
 .uc-bullets li:nth-child(4n+4) .bullet-icon { background: #E3F2FB;              color: #2E8FBB; }
 
-/* Icon-Farb-Cycling — Benefit-Icons Slide 3 */
+/* Icon-Farb-Cycling - Benefit-Icons Slide 3 */
 .benefit-item:nth-child(5n+1) .benefit-icon { background: var(--brand-light);   color: var(--brand); }
 .benefit-item:nth-child(5n+2) .benefit-icon { background: #FDF3E3;              color: #C27A14; }
 .benefit-item:nth-child(5n+3) .benefit-icon { background: #E3F2FB;              color: #2E8FBB; }
@@ -1333,7 +1325,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   position: absolute;
   inset: -6%;
   z-index: 0;
-  background-image: url('assets/outro-bg.jpg');
+  background-image: url('../assets/outro-bg.jpg');
   background-size: cover;
   background-position: center 40%;
   animation: ken-burns-cinema 28s cubic-bezier(.45,.05,.55,.95) infinite;
@@ -1385,7 +1377,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
 }
 .outro-logo-icon {
   width: 54px; height: 54px;
-  background: var(--brand);
+  background: #8EB216;
   border-radius: 16px;
   display: flex; align-items: center; justify-content: center;
   animation: logo-glow 3s ease-in-out infinite;
@@ -1398,7 +1390,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   line-height: 1;
 }
 .outro-logo-gastro { color: #fff; animation: logo-text-glow-white 3s ease-in-out infinite; }
-.outro-logo-fon { color: var(--brand); animation: logo-text-glow-green 3s ease-in-out infinite; }
+.outro-logo-fon { color: #8EB216; animation: logo-text-glow-green 3s ease-in-out infinite; }
 .outro-contact {
   display: inline-flex;
   flex-direction: column;
@@ -1508,10 +1500,10 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
   letter-spacing: 0.05em;
 }
 
-/* ───────── Variant: short — hide non-short slides ───────── */
+/* ───────── Variant: short - hide non-short slides ───────── */
 body[data-variant="short"] .slide:not([data-short]) { display: none !important; }
 
-/* ───────── Variant: extended — Web-App-Slides nur mit ?variant=extended ───────── */
+/* ───────── Variant: extended - show extra web-app slides ───────── */
 .slide[data-extended] { display: none !important; }
 body[data-variant="extended"] .slide[data-extended] { display: flex !important; }
 
@@ -1519,7 +1511,7 @@ body[data-variant="extended"] .slide[data-extended] { display: flex !important; 
 body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
 /* ═══════════════════════════════════════════════════════
-   UC-KONZEPTE — Hintergrundbild ab Demo-Block-Mitte nach rechts
+   UC-KONZEPTE - Hintergrundbild ab Demo-Block-Mitte nach rechts
    3-Spalter: Demo-Block-Mitte ~53% → Bild width 47%
    2-Spalter: Demo-Block-Mitte ~73% → Bild width 27%
    ═══════════════════════════════════════════════════════ */
@@ -1646,7 +1638,6 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   align-items: center;
   justify-content: center;
   flex: 0 0 38px;
-  animation: pulse-ring-soft 3.6s ease-out infinite;
 }
 .uc-cta-phone .icon svg { width: 16px; height: 16px; }
 .uc-cta-phone .number {
@@ -1694,6 +1685,14 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 .audio-btn:hover { background: #6A8E0C; }
 .audio-btn:active { transform: scale(.94); }
 .audio-btn svg { width: 16px; height: 16px; }
+.audio-player:not(.is-playing) .audio-btn {
+  animation: audio-pulse-ring 1.8s ease-out infinite;
+}
+@keyframes audio-pulse-ring {
+  0%   { box-shadow: 0 0 0 0px  rgba(123, 163, 14, 0.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(123, 163, 14, 0);    }
+  100% { box-shadow: 0 0 0 0px  rgba(123, 163, 14, 0);    }
+}
 .audio-btn .icon-pause { display: none; }
 .audio-player.is-playing .audio-btn .icon-play { display: none; }
 .audio-player.is-playing .audio-btn .icon-pause { display: block; }
@@ -1722,6 +1721,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   flex-shrink: 0;
   letter-spacing: 0.02em;
 }
+
 .audio-speed-btn {
   background: none;
   border: 1px solid var(--hair);
@@ -1741,6 +1741,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 .audio-speed-btn:hover { color: var(--brand); border-color: var(--brand); }
 .audio-speed-btn.is-fast { background: var(--brand); color: #fff; border-color: var(--brand); }
 
+
 .qr-floater {
   position: absolute;
   bottom: 44px;
@@ -1756,7 +1757,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 .qr-floater img { width: 100% !important; height: 100% !important; display: block; border-radius: 6px; }
 .qr-floater svg { display: block; width: 100%; height: 100%; }
 
-/* Anwendungsfälle 3, 4, 5 — kompakteres uc-story damit Hörprobe sauber sichtbar bleibt */
+/* Anwendungsfälle 3, 4, 5 - kompakteres uc-story damit Hörprobe sauber sichtbar bleibt */
 .concept-c .uc-bullets, .concept-d .uc-bullets, .concept-e .uc-bullets { gap: 14px; }
 .concept-c .uc-story .uc-setup, .concept-d .uc-story .uc-setup, .concept-e .uc-story .uc-setup { margin-bottom: 28px; }
 .concept-c .uc-cta-inline, .concept-d .uc-cta-inline, .concept-e .uc-cta-inline { margin-top: 24px; }
@@ -1813,7 +1814,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 }
 
 /* ─── Slide 6: Demo-Block in Story integriert ─── */
-/* .uc-no-demo override entfernt — slide 6 nutzt jetzt das einheitliche concept-Layout */
+/* .uc-no-demo override entfernt - slide 6 nutzt jetzt das einheitliche concept-Layout */
 .demo-inline {
   margin-top: 28px;
   padding-top: 22px;
@@ -1861,31 +1862,31 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   display: none;
   position: fixed;
   inset: 0;
-  background: linear-gradient(180deg, #060d04 0%, #0d180a 100%);
+  background: #fff;
   z-index: 999999;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #111b0a;
   text-align: center;
   padding: 40px 32px;
   gap: 0;
 }
 #mg-icon {
   width: 64px; height: 64px;
-  background: rgba(106,191,94,.12);
-  border: 1px solid rgba(106,191,94,.25);
+  background: rgba(153,199,24,.12);
+  border: 1px solid rgba(153,199,24,.25);
   border-radius: 20px;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 28px;
 }
-#mg-icon svg { width: 30px; height: 30px; color: #6abf5e; }
+#mg-icon svg { width: 30px; height: 30px; color: #8EB216; }
 #mobile-gate h2 {
   font-size: 22px; font-weight: 700;
   margin: 0 0 10px; letter-spacing: -.02em;
 }
 #mobile-gate p {
-  font-size: 15px; color: rgba(255,255,255,.5);
+  font-size: 15px; color: rgba(17,27,10,.5);
   margin: 0 0 36px; line-height: 1.5; max-width: 300px;
 }
 .mg-btn {
@@ -1898,12 +1899,12 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 .mg-btn:active { opacity: .75; }
 .mg-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
 .mg-btn-primary {
-  background: #6abf5e; color: #060d04; margin-bottom: 12px;
+  background: #8EB216; color: #060d04; margin-bottom: 12px;
 }
 .mg-btn-secondary {
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.12);
-  color: #fff;
+  background: rgba(17,27,10,.05);
+  border: 1px solid rgba(17,27,10,.12);
+  color: #111b0a;
 }
 #mg-logo {
   position: absolute; bottom: 32px;
@@ -1914,9 +1915,30 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 /* Mobile Gate wird per JS nach Passwort-Auth angezeigt */
 
 
+/* ── Tablet navigation buttons ── */
+#nav-prev, #nav-next {
+  display: none;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9999;
+  width: 48px; height: 48px;
+  background: rgba(17,27,10,.07);
+  border: 1px solid rgba(17,27,10,.13);
+  border-radius: 50%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+#nav-prev { left: 14px; }
+#nav-next { right: 14px; }
+#nav-prev:hover, #nav-next:hover { background: rgba(17,27,10,.14); }
+#nav-prev svg, #nav-next svg { width: 22px; height: 22px; stroke: rgba(17,27,10,.55); }
+
 /* ═══════════════════════════════════════════════════════
-   WEB-APP-SLIDES (erweiterte Variante) — echter Screenshot
-   im Browser-Rahmen + Callout-Sprechblasen
+   WEB-APP-SLIDES (extended variant) — screenshot in browser frame
    ═══════════════════════════════════════════════════════ */
 .webapp {
   background: var(--paper);
@@ -1971,43 +1993,6 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   width: auto;
   height: auto;
 }
-.callout {
-  position: absolute;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 11px 18px;
-  background: var(--gastro);
-  color: #fff;
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  border-radius: 12px;
-  box-shadow: 0 10px 28px rgba(10,122,91,.34);
-  white-space: nowrap;
-  z-index: 2;
-}
-.callout::before {
-  content: none;
-}
-.callout.brand {
-  background: var(--brand);
-  box-shadow: 0 10px 28px rgba(123,163,14,.34);
-}
-.callout.point-bl::after,
-.callout.point-br::after,
-.callout.point-tl::after,
-.callout.point-tr::after {
-  content: "";
-  position: absolute;
-  width: 13px; height: 13px;
-  background: inherit;
-  transform: rotate(45deg);
-}
-.callout.point-bl::after { left: 22px;  bottom: -5px; }
-.callout.point-br::after { right: 22px; bottom: -5px; }
-.callout.point-tl::after { left: 22px;  top: -5px; }
-.callout.point-tr::after { right: 22px; top: -5px; }
 .webapp-cap {
   display: flex;
   align-items: center;
@@ -2046,9 +2031,79 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   }
   .help-overlay { display: none !important; }
 }
+
+/* ───────── iOS memory fix: skip GPU compositing on inactive slides ───────── */
+.slide:not(.is-active) {
+  content-visibility: hidden;
+}
+.slide:not(.is-active) * {
+  animation-play-state: paused !important;
+  will-change: auto !important;
+}
+
+/* ───────── Rotation blocker (mobile portrait only) ───────── */
+#rotate-blocker {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #0C1109;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  text-align: center;
+  padding: 40px;
+}
+#rotate-blocker .rotate-icon {
+  width: 80px;
+  height: 80px;
+  color: #9BCA1A;
+  animation: rotate-phone 2s ease-in-out infinite alternate;
+  transform-origin: center center;
+}
+@keyframes rotate-phone {
+  0%,  30% { transform: rotate(0deg);  }
+  70%, 100% { transform: rotate(90deg); }
+}
+#rotate-blocker .rotate-title {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+#rotate-blocker .rotate-sub {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 15px;
+  color: rgba(255,255,255,.45);
+  line-height: 1.5;
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  #rotate-blocker { display: flex; }
+}
 </style>
 </head>
 <body>
+
+<div id="rotate-blocker" aria-live="polite">
+  <svg class="rotate-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Phone body (portrait) -->
+    <rect x="7" y="3" width="10" height="17" rx="2"/>
+    <line x1="10" y1="5.2" x2="14" y2="5.2" stroke-width="1.1"/>
+    <circle cx="12" cy="17.8" r="0.7" fill="currentColor" stroke="none"/>
+    <!-- Clockwise rotation arrow top-right — arrowhead points down -->
+    <path d="M 13 1.5 A 7 7 0 0 1 21.5 9.5"/>
+    <polyline points="20,8 21.5,9.5 23,8"/>
+    <!-- Clockwise rotation arrow bottom-left — arrowhead points up -->
+    <path d="M 11 22.5 A 7 7 0 0 1 2.5 14.5"/>
+    <polyline points="1,16 2.5,14.5 4,16"/>
+  </svg>
+  <div class="rotate-title">Please rotate your phone</div>
+  <div class="rotate-sub">For the best experience,<br>please switch to landscape mode.</div>
+</div>
+
 
 
 <div id="progress-track"><div id="progress-bar"></div></div>
@@ -2064,30 +2119,26 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
-      <div class="slide-tag"><span class="pill">Produktvorstellung</span></div>
+      <div class="slide-tag"><span class="pill">Product Overview</span></div>
     </div>
 
     <div class="cover-content">
       <div class="cover-logo reveal" style="--i:0">
         <div class="cover-logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8"/>
-            <path d="M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7"/>
-            <path d="m2.1 21.8 6.4-6.3"/>
-            <path d="m19 5-7 7"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
         </div>
         <span class="cover-logo-text"><span class="cover-logo-gastro">Gastro</span><span class="cover-logo-fon">fon</span></span>
       </div>
-      <h1 class="cover-title reveal" style="--i:1">KI&#8209;Telefonassistent<br>für Restaurants</h1>
+      <h1 class="cover-title reveal" style="--i:1">AI Voice Agent<br>for Restaurants</h1>
       <p class="cover-subtitle reveal" style="--i:2">
-        Kein verpasster Anruf. Keine Buchung geht verloren.<br>Gastrofon übernimmt das Telefon 24/7 und trägt direkt ins Reservierungssystem ein.
+        No missed call. No booking lost.<br>Gastrofon handles the phone 24/7 and enters reservations directly into your system.
       </p>
     </div>
 
     <div class="slide-footer">
       <span>ninepointfive.ai</span>
       <span class="page-counter">01 / 09</span>
+
     </div>
   </section>
 
@@ -2095,42 +2146,42 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   <section class="slide problem" data-short>
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
-      <div class="slide-tag"><span class="pill">Marktlage</span></div>
+      <div class="slide-tag"><span class="pill">Market Reality</span></div>
     </div>
 
     <div class="problem-header">
-      <div class="eyebrow danger reveal" style="--i:0">Jeder verpasste Anruf ist verlorener Umsatz</div>
-      <h1 class="reveal" style="--i:1">Aber jeder zweite Anruf <em>geht verloren.</em></h1>
-      <p class="reveal" style="--i:2">Verpasste Anrufe in der Gastronomie sind kein Ausreißer-Problem, sondern ein Strukturphänomen, quantitativ belegt.</p>
+      <div class="eyebrow danger reveal" style="--i:0">Every missed call is lost revenue</div>
+      <h1 class="reveal" style="--i:1">But every second call<br><em>goes unanswered.</em></h1>
+      <p class="reveal" style="--i:2">Missed calls in restaurants are not an outlier problem, but a structural phenomenon - quantitatively documented.</p>
     </div>
 
     <div class="kpi-grid">
       <div class="kpi-tile reveal" style="--i:3">
-        <div class="kpi-label">Verpasste Anrufe</div>
+        <div class="kpi-label">Missed Calls</div>
         <div class="kpi-value"><span class="kpi-counter" data-target="43">0</span><span class="kpi-suffix">%</span></div>
-        <div class="kpi-desc">der Anrufe in Restaurants werden nicht angenommen. Über alle Tageszeiten gemittelt.<sup>1</sup></div>
+        <div class="kpi-desc">of calls in restaurants go unanswered. Averaged across all times of day.<sup>1</sup></div>
       </div>
       <div class="kpi-tile reveal" style="--i:4">
-        <div class="kpi-label">Gästeverlust</div>
+        <div class="kpi-label">Guest Loss</div>
         <div class="kpi-value"><span class="kpi-counter" data-target="69">0</span><span class="kpi-suffix">%</span></div>
-        <div class="kpi-desc">der Gäste wählen ein anderes Restaurant, wenn niemand ans Telefon geht.<sup>2</sup></div>
+        <div class="kpi-desc">of guests choose another restaurant if no one answers the phone.<sup>2</sup></div>
       </div>
       <div class="kpi-tile reveal" style="--i:5">
-        <div class="kpi-label">Stoßzeiten-Problem</div>
+        <div class="kpi-label">Peak-Hour Problem</div>
         <div class="kpi-value"><span class="kpi-counter" data-target="63">0</span><span class="kpi-suffix">%</span></div>
-        <div class="kpi-desc">der Restaurants können Anrufe zur Stoßzeit nicht zuverlässig annehmen. Das Personal ist im Service.<sup>3</sup></div>
+        <div class="kpi-desc">of restaurants cannot reliably answer calls during peak hours. Staff is busy serving.<sup>3</sup></div>
       </div>
     </div>
 
     <div class="sources-footer reveal" style="--i:6">
-      <strong>Quellen:</strong>
-      <sup>1</sup> <a href="https://hostie.ai/resources/stopping-43-percent-revenue-leak-hostie-ai-recovers-292k-missed-restaurant-calls" target="_blank">Branchenanalyse verpasste Anrufe in der Gastronomie</a> ·
-      <sup>2</sup> <a href="https://hospitalitytech.com/missed-connection-over-two-thirds-americans-would-ditch-restaurants-dont-answer-phone" target="_blank">Verbraucherumfrage Restaurantwahl bei entgangenem Anruf</a> ·
-      <sup>3</sup> <a href="https://www.opentable.de/restaurant-solutions/produkte/reservierungsmanagement/voice-ki/" target="_blank">Marktbericht Reservierungsmanagement &amp; Telefonannahme</a>
+      <strong>Sources:</strong>
+      <sup>1</sup> <a href="https://hostie.ai/resources/stopping-43-percent-revenue-leak-hostie-ai-recovers-292k-missed-restaurant-calls" target="_blank">Industry analysis: missed calls in restaurants</a> ·
+      <sup>2</sup> <a href="https://hospitalitytech.com/missed-connection-over-two-thirds-americans-would-ditch-restaurants-dont-answer-phone" target="_blank">Consumer survey: restaurant choice when a call goes unanswered</a> ·
+      <sup>3</sup> <a href="https://www.opentable.de/restaurant-solutions/produkte/reservierungsmanagement/voice-ki/" target="_blank">Market report: reservation management &amp; phone answering</a>
     </div>
 
     <div class="slide-footer">
-      <span>ninepointfive.ai · Gastrofon · Marktlage</span>
+      <span>ninepointfive.ai · Gastrofon · Market Reality</span>
       <span class="page-counter">02 / 09</span>
     </div>
   </section>
@@ -2139,12 +2190,12 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   <section class="slide what-is benefit-slide" data-short>
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
-      <div class="slide-tag"><span class="pill">Mehrwert</span></div>
+      <div class="slide-tag"><span class="pill">Value</span></div>
     </div>
 
-    <div class="eyebrow reveal" style="--i:0">Mehrwert für dein Restaurant</div>
+    <div class="eyebrow reveal" style="--i:0">What Gastrofon does for your restaurant</div>
     <h1 class="benefit-headline reveal" style="--i:1">
-      Kein Anruf geht verloren. Weniger Aufwand. <strong>Mehr Buchungen.</strong>
+      No call goes missed. Less effort.<br><strong>More bookings.</strong>
     </h1>
 
     <div class="benefit-grid">
@@ -2153,40 +2204,40 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
         <div class="benefit-item reveal" style="--i:2">
           <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></div>
           <div class="benefit-body">
-            <strong>Keine Reservierungen verpassen, auch nach Feierabend</strong>
-            <p>Gäste können jederzeit anrufen und reservieren, auch spät abends oder außerhalb der Öffnungszeiten.</p>
+            <strong>Never miss a reservation - even after closing time</strong>
+            <p>Guests can call and book anytime, even late at night or outside business hours.</p>
           </div>
         </div>
 
         <div class="benefit-item reveal" style="--i:3">
           <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
           <div class="benefit-body">
-            <strong>Mehr Buchungen durch lückenlose Annahme</strong>
-            <p>Wer jeden Anruf annimmt, verliert keine Anfragen mehr und gewinnt Reservierungen, die sonst an die Konkurrenz gehen.</p>
+            <strong>More bookings through complete call coverage</strong>
+            <p>Every call answered means no lost enquiries - and reservations that would have gone to competitors.</p>
           </div>
         </div>
 
         <div class="benefit-item reveal" style="--i:4">
           <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
           <div class="benefit-body">
-            <strong>Alle Reservierungen in einem System</strong>
-            <p>Telefonische Buchungen landen direkt in deinem Tischreservierungssystem. Kein manuelles Nachtragen mehr.</p>
+            <strong>All reservations in one system</strong>
+            <p>Phone bookings go directly into your reservation system. No more manual entry.</p>
           </div>
         </div>
 
         <div class="benefit-item reveal" style="--i:5">
           <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
           <div class="benefit-body">
-            <strong>Stoßzeiten automatisch abfangen</strong>
-            <p>Während des laufenden Services übernimmt der Assistent, ohne dass du oder dein Team ans Telefon müsst.</p>
+            <strong>Handle peak times automatically</strong>
+            <p>During service, the assistant takes over - without you or your team having to answer the phone.</p>
           </div>
         </div>
 
         <div class="benefit-item reveal" style="--i:6">
           <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9 10h6"/><path d="M9 14h4"/></svg></div>
           <div class="benefit-body">
-            <strong>Weniger No-Shows durch automatische SMS</strong>
-            <p>Gäste erhalten automatisch eine SMS mit ihren Reservierungsdetails, bei jedem Kanal, nicht nur Telefon.</p>
+            <strong>Fewer no-shows with automatic SMS</strong>
+            <p>Guests automatically receive an SMS with their reservation details across every channel, not just phone.</p>
           </div>
         </div>
 
@@ -2194,69 +2245,69 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
       <div class="benefit-metrics">
         <div class="metric-tile reveal" style="--i:2">
-          <div class="metric-label">Mehr Reservierungen</div>
+          <div class="metric-label">More Reservations</div>
           <div class="metric-value"><span class="metric-prefix">+</span><span class="kpi-counter" data-target="31">0</span><span class="metric-suffix">%</span></div>
-          <div class="metric-desc">Lückenlose Annahme bringt nachweislich mehr tatsächliche Buchungen.<sup>1</sup></div>
+          <div class="metric-desc">Complete call coverage demonstrably delivers more actual bookings.<sup>1</sup></div>
         </div>
         <div class="metric-tile reveal" style="--i:4">
-          <div class="metric-label">Weniger No-Shows</div>
+          <div class="metric-label">Fewer No-Shows</div>
           <div class="metric-value"><span class="metric-prefix">−</span><span class="kpi-counter" data-target="27">0</span><span class="metric-suffix">%</span></div>
-          <div class="metric-desc">Automatische SMS-Erinnerungen halten Reservierungen präsent.<sup>2</sup></div>
+          <div class="metric-desc">Automatic SMS reminders keep reservations top-of-mind.<sup>2</sup></div>
         </div>
         <div class="metric-tile reveal" style="--i:6">
-          <div class="metric-label">Kundenzufriedenheit</div>
+          <div class="metric-label">Guest Satisfaction</div>
           <div class="metric-value"><span class="kpi-counter" data-target="98">0</span><span class="metric-suffix">%</span></div>
-          <div class="metric-desc">Gäste bewerten den KI-Telefonkontakt fast durchgängig positiv.<sup>3</sup></div>
+          <div class="metric-desc">Guests rate AI phone contact almost consistently positive.<sup>3</sup></div>
         </div>
       </div>
     </div>
 
     <div class="sources-footer reveal" style="--i:7">
-      <strong>Quellen:</strong>
-      <sup>1</sup> <a href="https://www.opentable.de/restaurant-solutions/produkte/reservierungsmanagement/voice-ki/" target="_blank">Marktbericht Reservierungsmanagement &amp; KI-Telefonlösungen</a> ·
-      <sup>2</sup> <a href="https://resos.com/how-to-reduce-no-shows-in-the-restaurant-industry/" target="_blank">Branchenstudie No-Show-Reduktion durch digitale Bestätigung</a> ·
-      <sup>3</sup> <a href="https://www.opentable.de/restaurant-solutions/produkte/reservierungsmanagement/voice-ki/" target="_blank">Kundenzufriedenheitsanalyse Voice-KI im Gastgewerbe</a>
+      <strong>Sources:</strong>
+      <sup>1</sup> <a href="https://www.opentable.de/restaurant-solutions/produkte/reservierungsmanagement/voice-ki/" target="_blank">Market report: reservation management &amp; AI phone solutions</a> ·
+      <sup>2</sup> <a href="https://resos.com/how-to-reduce-no-shows-in-the-restaurant-industry/" target="_blank">Industry study: no-show reduction through digital confirmation</a> ·
+      <sup>3</sup> <a href="https://www.opentable.de/restaurant-solutions/produkte/reservierungsmanagement/voice-ki/" target="_blank">Customer satisfaction analysis: voice AI in hospitality</a>
     </div>
 
     <div class="slide-footer">
-      <span>ninepointfive.ai · Gastrofon · Mehrwert</span>
+      <span>ninepointfive.ai · Gastrofon · Value</span>
       <span class="page-counter">03 / 09</span>
     </div>
   </section>
 
-  <!-- ╔══════ Slide 4 · UC1 — Neue Reservierung ══════╗ -->
+  <!-- ╔══════ Slide 4 · UC1 - Neue Reservierung ══════╗ -->
   <section class="slide uc uc-3col concept-a" data-short>
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
-      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>Neue Reservierung</span></div>
+      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>New Reservation</span></div>
     </div>
 
     <div class="uc-story">
-      <div class="eyebrow reveal" style="--i:0">Anwendungsfall 1</div>
-      <h2 class="reveal" style="--i:1">Familie ruft an,<br>passender Tisch reserviert.</h2>
+      <div class="eyebrow reveal" style="--i:0">Use Case 1</div>
+      <h2 class="reveal" style="--i:1">Family calls in -<br>right table reserved.</h2>
       <p class="uc-setup reveal" style="--i:2">
-        Tisch für vier Personen, 18:30 Uhr angefragt. Wunschzeit ausgebucht. Gastrofon schlägt passende Alternative vor und hinterlegt die Notiz.
+        Table for four at 6 PM requested. Preferred time fully booked. Gastrofon suggests a suitable alternative and saves the note.
       </p>
       <ul class="uc-bullets">
-        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span>Frage zur Speisekarte</li>
-        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Tischreservierung für vier Personen um 18:30 Uhr</li>
-        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><circle cx="16" cy="16" r="6"/><path d="M16 14v2l1 1"/></svg></span>Leider ausgebucht. Alternative um 17:30 Uhr</li>
-        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/><path d="M2 6h2"/><path d="M2 10h2"/><path d="M2 14h2"/><path d="M2 18h2"/><path d="m18.4 2.6 3 3L13 14l-4 1 1-4z"/></svg></span>Notiz: Kinderhochstuhl</li>
-        <li class="reveal" style="--i:7"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Buchungsbestätigung per SMS</li>
+        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span>Question about the menu</li>
+        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Table reservation for four at 6 PM</li>
+        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><circle cx="16" cy="16" r="6"/><path d="M16 14v2l1 1"/></svg></span>Sorry, fully booked. Alternative at 5:30 PM</li>
+        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/><path d="M2 6h2"/><path d="M2 10h2"/><path d="M2 14h2"/><path d="M2 18h2"/><path d="m18.4 2.6 3 3L13 14l-4 1 1-4z"/></svg></span>Note: high chair</li>
+        <li class="reveal" style="--i:7"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Booking confirmation via SMS</li>
       </ul>
 
       <div class="uc-cta-inline reveal" style="--i:7">
         <div class="uc-cta-block">
-          <div class="uc-cta-label">Jetzt anrufen</div>
+          <div class="uc-cta-label">Call now</div>
           <a class="uc-cta-phone" href="tel:+4973578854999" aria-label="Anrufen +49 7357 885 4999">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A18 18 0 0 1 2 4.18 2 2 0 0 1 4 2h3.08a2 2 0 0 1 2 1.72 13 13 0 0 0 .68 3 2 2 0 0 1-.46 2L8 10.5a16 16 0 0 0 5.5 5.5l1.78-1.3a2 2 0 0 1 2-.46 13 13 0 0 0 3 .68 2 2 0 0 1 1.72 2z"/></svg></span>
             <span class="number" data-demo-number>+49 7357 885 4999</span>
           </a>
         </div>
         <div class="uc-cta-block uc-cta-audio">
-          <div class="uc-cta-label">Hörprobe</div>
+          <div class="uc-cta-label">Listen</div>
           <div class="audio-player">
-            <button class="audio-btn" type="button" aria-label="Abspielen">
+            <button class="audio-btn" type="button" aria-label="Play">
               <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
             </button>
@@ -2264,6 +2315,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
             <div class="audio-time">0:00</div>
             <audio class="audio-source" preload="none">
               <source src="assets/recordings/uc1-reservation.mp3" type="audio/mpeg">
+
             </audio>
           </div>
         </div>
@@ -2287,16 +2339,16 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
           <div class="sms-header">
             <div class="avatar">HB</div>
             <div class="name">Hausbrauerei Biberach</div>
-            <div class="name-sub">SMS · jetzt</div>
+            <div class="name-sub">SMS · just now</div>
           </div>
           <div class="sms-body">
-            <div class="sms-time"><strong>Heute</strong> 20:50</div>
-            <div class="sms-bubble">Hallo Luc! Deine Tischreservierung ist bestätigt.<br>Datum: Fr, 15.05.2026 um 17:30 Uhr<br>Personen: 4<br>Buchung: <a href="https://go.ninepointfive.ai/SOFkh" target="_blank" rel="noopener" style="color:#007aff;word-break:break-all;">https://go.ninepointfive.ai/SOFkh</a></div>
+            <div class="sms-time"><strong>Today</strong> 20:50</div>
+            <div class="sms-bubble">Hi Luc! Your table reservation is confirmed.<br>Date: Fri, 15 May 2026 at 5:30 PM<br>Guests: 4<br>Booking: <a href="https://go.ninepointfive.ai/UGUSZ" target="_blank" rel="noopener" style="color:#007aff;word-break:break-all;">https://go.ninepointfive.ai/UGUSZ</a></div>
           </div>
           <div class="sms-input-bar">
             <div class="sms-add-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
             <div class="sms-text-field">
-              <span>Textnachricht · SMS</span>
+              <span>Text message · SMS</span>
               <span class="mic-inside"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></span>
             </div>
           </div>
@@ -2307,43 +2359,44 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
     <div class="slide-footer">
       <span>ninepointfive.ai · Gastrofon · UC 1</span>
+
       <span class="page-counter">04 / 09</span>
     </div>
   </section>
 
-  <!-- ╔══════ Slide 5 · UC2 — Reservierungs-Änderung ══════╗ -->
+  <!-- ╔══════ Slide 5 · UC2 - Reservierungs-Änderung ══════╗ -->
   <section class="slide uc uc-3col concept-b">
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
-      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>Änderung</span></div>
+      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>Modification</span></div>
     </div>
 
     <div class="uc-story">
-      <div class="eyebrow reveal" style="--i:0">Anwendungsfall 2</div>
-      <h2 class="reveal" style="--i:1">Stamm­gast<br>verschiebt seine<br>Reservierung.</h2>
+      <div class="eyebrow reveal" style="--i:0">Use Case 2</div>
+      <h2 class="reveal" style="--i:1">Regular guest<br>shifts his<br>reservation.</h2>
       <p class="uc-setup reveal" style="--i:2">
-        Der Gast verschiebt seine Reservierung und kommt mit zwei Personen mehr. Außerdem hat er noch eine Frage zur Tageskarte.
+        The guest moves his reservation and adds two more people. He also has a question about the daily specials.
       </p>
       <ul class="uc-bullets">
-        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>Bestehende Reservierung gefunden</li>
-        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 21 8 16 13"/><path d="M21 8H8"/><path d="M8 11 3 16 8 21"/><path d="M3 16h13"/></svg></span>Reservierung verschoben</li>
-        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Anpassung von 4 auf 6 Personen</li>
-        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span>Frage zur Tageskarte beantwortet</li>
-        <li class="reveal" style="--i:7"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Änderungsbestätigung per SMS</li>
+        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>Existing reservation found</li>
+        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 21 8 16 13"/><path d="M21 8H8"/><path d="M8 11 3 16 8 21"/><path d="M3 16h13"/></svg></span>Reservation rescheduled</li>
+        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Adjusted from 4 to 6 guests</li>
+        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span>Daily specials question answered</li>
+        <li class="reveal" style="--i:7"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Change confirmation via SMS</li>
       </ul>
 
       <div class="uc-cta-inline reveal" style="--i:8">
         <div class="uc-cta-block">
-          <div class="uc-cta-label">Jetzt anrufen</div>
+          <div class="uc-cta-label">Call now</div>
           <a class="uc-cta-phone" href="tel:+4973578854999" aria-label="Anrufen +49 7357 885 4999">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A18 18 0 0 1 2 4.18 2 2 0 0 1 4 2h3.08a2 2 0 0 1 2 1.72 13 13 0 0 0 .68 3 2 2 0 0 1-.46 2L8 10.5a16 16 0 0 0 5.5 5.5l1.78-1.3a2 2 0 0 1 2-.46 13 13 0 0 0 3 .68 2 2 0 0 1 1.72 2z"/></svg></span>
             <span class="number" data-demo-number>+49 7357 885 4999</span>
           </a>
         </div>
         <div class="uc-cta-block uc-cta-audio">
-          <div class="uc-cta-label">Hörprobe</div>
+          <div class="uc-cta-label">Listen</div>
           <div class="audio-player">
-            <button class="audio-btn" type="button" aria-label="Abspielen">
+            <button class="audio-btn" type="button" aria-label="Play">
               <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
             </button>
@@ -2374,16 +2427,16 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
           <div class="sms-header">
             <div class="avatar">HB</div>
             <div class="name">Hausbrauerei Biberach</div>
-            <div class="name-sub">SMS · jetzt</div>
+            <div class="name-sub">SMS · just now</div>
           </div>
           <div class="sms-body">
-            <div class="sms-time"><strong>Heute</strong> 22:00</div>
-            <div class="sms-bubble">Hallo Luc! Deine Tischreservierung wurde geändert.<br>Datum: Fr, 15.05.2026 um 21:00 Uhr<br>Personen: 6<br>Buchung: <a href="https://go.ninepointfive.ai/vkzFx" target="_blank" rel="noopener" style="color:#007aff;word-break:break-all;">https://go.ninepointfive.ai/vkzFx</a></div>
+            <div class="sms-time"><strong>Today</strong> 22:00</div>
+            <div class="sms-bubble">Hi Luc! Your table reservation has been updated.<br>Date: Fri, 15 May 2026 at 9:00 PM<br>Guests: 6<br>Booking: <a href="https://go.ninepointfive.ai/SSbWm" target="_blank" rel="noopener" style="color:#007aff;word-break:break-all;">https://go.ninepointfive.ai/SSbWm</a></div>
           </div>
           <div class="sms-input-bar">
             <div class="sms-add-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
             <div class="sms-text-field">
-              <span>Textnachricht · SMS</span>
+              <span>Text message · SMS</span>
               <span class="mic-inside"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></span>
             </div>
           </div>
@@ -2394,42 +2447,43 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
     <div class="slide-footer">
       <span>ninepointfive.ai · Gastrofon · UC 2</span>
+
       <span class="page-counter">05 / 09</span>
     </div>
   </section>
 
-  <!-- ╔══════ Slide 6 · UC3 — Stornierung ══════╗ -->
+  <!-- ╔══════ Slide 6 · UC3 - Stornierung ══════╗ -->
   <section class="slide uc uc-3col concept-c uc-no-demo">
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
-      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>Stornierung</span></div>
+      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>Cancellation</span></div>
     </div>
 
     <div class="uc-story">
-      <div class="eyebrow reveal" style="--i:0">Anwendungsfall 3</div>
-      <h2 class="reveal" style="--i:1">Manchmal kommt<br>etwas dazwischen.</h2>
+      <div class="eyebrow reveal" style="--i:0">Use Case 3</div>
+      <h2 class="reveal" style="--i:1">Sometimes<br>something comes up.</h2>
       <p class="uc-setup reveal" style="--i:2">
-        Ein Gast muss absagen. Gastrofon findet die Reservierung, bestätigt höflich die Stornierung und entfernt diese sofort aus dem Reservierungssystem.
+        A guest needs to cancel. Gastrofon finds the reservation, politely confirms the cancellation, and removes it immediately from the reservation system.
       </p>
       <ul class="uc-bullets">
-        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A18 18 0 0 1 2 4.18 2 2 0 0 1 4 2h3.08a2 2 0 0 1 2 1.72 13 13 0 0 0 .68 3 2 2 0 0 1-.46 2L8 10.5a16 16 0 0 0 5.5 5.5l1.78-1.3a2 2 0 0 1 2-.46 13 13 0 0 0 3 .68 2 2 0 0 1 1.72 2z"/></svg></span>Gast meldet sich, will absagen</li>
-        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Reservierung sauber identifiziert</li>
-        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6"/><path d="m15 9-6 6"/></svg></span>Stornierung höflich bestätigt</li>
-        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>SMS-Bestätigung an Gast</li>
+        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A18 18 0 0 1 2 4.18 2 2 0 0 1 4 2h3.08a2 2 0 0 1 2 1.72 13 13 0 0 0 .68 3 2 2 0 0 1-.46 2L8 10.5a16 16 0 0 0 5.5 5.5l1.78-1.3a2 2 0 0 1 2-.46 13 13 0 0 0 3 .68 2 2 0 0 1 1.72 2z"/></svg></span>Guest calls in to cancel</li>
+        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Reservation cleanly identified</li>
+        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6"/><path d="m15 9-6 6"/></svg></span>Cancellation politely confirmed</li>
+        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>SMS confirmation to guest</li>
       </ul>
 
       <div class="uc-cta-inline reveal" style="--i:7">
         <div class="uc-cta-block">
-          <div class="uc-cta-label">Jetzt anrufen</div>
+          <div class="uc-cta-label">Call now</div>
           <a class="uc-cta-phone" href="tel:+4973578854999" aria-label="Anrufen +49 7357 885 4999">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A18 18 0 0 1 2 4.18 2 2 0 0 1 4 2h3.08a2 2 0 0 1 2 1.72 13 13 0 0 0 .68 3 2 2 0 0 1-.46 2L8 10.5a16 16 0 0 0 5.5 5.5l1.78-1.3a2 2 0 0 1 2-.46 13 13 0 0 0 3 .68 2 2 0 0 1 1.72 2z"/></svg></span>
             <span class="number" data-demo-number>+49 7357 885 4999</span>
           </a>
         </div>
         <div class="uc-cta-block uc-cta-audio">
-          <div class="uc-cta-label">Hörprobe</div>
+          <div class="uc-cta-label">Listen</div>
           <div class="audio-player">
-            <button class="audio-btn" type="button" aria-label="Abspielen">
+            <button class="audio-btn" type="button" aria-label="Play">
               <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
             </button>
@@ -2459,16 +2513,16 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
           <div class="sms-header">
             <div class="avatar">HB</div>
             <div class="name">Hausbrauerei Biberach</div>
-            <div class="name-sub">SMS · jetzt</div>
+            <div class="name-sub">SMS · just now</div>
           </div>
           <div class="sms-body">
-            <div class="sms-time"><strong>Heute</strong> 14:30</div>
-            <div class="sms-bubble">Hallo Luc, deine Tischreservierung am Fr, 15.05.2026 um 21:00 Uhr für 6 Personen wurde storniert. Wir hoffen, dich bald wieder bei uns begrüßen zu dürfen!</div>
+            <div class="sms-time"><strong>Today</strong> 14:30</div>
+            <div class="sms-bubble">Hi Luc, your table reservation on Fri, 15 May 2026 at 9:00 PM for 6 guests has been cancelled. We hope to welcome you back soon!</div>
           </div>
           <div class="sms-input-bar">
             <div class="sms-add-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
             <div class="sms-text-field">
-              <span>Textnachricht · SMS</span>
+              <span>Text message · SMS</span>
               <span class="mic-inside"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></span>
             </div>
           </div>
@@ -2479,43 +2533,44 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
     <div class="slide-footer">
       <span>ninepointfive.ai · Gastrofon · UC 3</span>
+
       <span class="page-counter">06 / 09</span>
     </div>
   </section>
 
-  <!-- ╔══════ Slide 7 · UC4 — Restaurant-FAQs ══════╗ -->
+  <!-- ╔══════ Slide 7 · UC4 - Restaurant-FAQs ══════╗ -->
   <section class="slide uc concept-d">
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
-      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>Fragen</span></div>
+      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>Questions</span></div>
     </div>
 
     <div class="uc-story">
-      <div class="eyebrow reveal" style="--i:0">Anwendungsfall 4</div>
-      <h2 class="reveal" style="--i:1">Nicht jeder Anruf<br>endet in einer<br>Reservierung.</h2>
+      <div class="eyebrow reveal" style="--i:0">Use Case 4</div>
+      <h2 class="reveal" style="--i:1">Not every call<br>ends in a<br>reservation.</h2>
       <p class="uc-setup reveal" style="--i:2">
-        Anrufer wollen Auskunft: Öffnungszeiten, vegane Gerichte, ob Hunde erlaubt sind, die Terrasse und wo man parkt. Gastrofon entlastet das Personal über Reservierungen hinaus.
+        Callers want information: opening hours, vegan dishes, whether dogs are allowed, the terrace, and where to park. Gastrofon relieves staff well beyond reservations.
       </p>
       <ul class="uc-bullets">
-        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Öffnungszeiten (täglich ab 11 Uhr)</li>
-        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></span>Vegane Gerichte</li>
-        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>Hund herzlich willkommen</li>
-        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>Terrasse (keine feste Reservierung)</li>
-        <li class="reveal" style="--i:7"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>Anfahrt &amp; Parkplätze</li>
+        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Opening hours (daily from 11 am)</li>
+        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></span>Vegan dishes</li>
+        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>Dogs are welcome</li>
+        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>Terrace (no fixed reservation)</li>
+        <li class="reveal" style="--i:7"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>Directions &amp; parking</li>
       </ul>
 
       <div class="uc-cta-inline reveal" style="--i:8">
         <div class="uc-cta-block">
-          <div class="uc-cta-label">Jetzt anrufen</div>
+          <div class="uc-cta-label">Call now</div>
           <a class="uc-cta-phone" href="tel:+4973578854999" aria-label="Anrufen +49 7357 885 4999">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A18 18 0 0 1 2 4.18 2 2 0 0 1 4 2h3.08a2 2 0 0 1 2 1.72 13 13 0 0 0 .68 3 2 2 0 0 1-.46 2L8 10.5a16 16 0 0 0 5.5 5.5l1.78-1.3a2 2 0 0 1 2-.46 13 13 0 0 0 3 .68 2 2 0 0 1 1.72 2z"/></svg></span>
             <span class="number" data-demo-number>+49 7357 885 4999</span>
           </a>
         </div>
         <div class="uc-cta-block uc-cta-audio">
-          <div class="uc-cta-label">Hörprobe</div>
+          <div class="uc-cta-label">Listen</div>
           <div class="audio-player">
-            <button class="audio-btn" type="button" aria-label="Abspielen">
+            <button class="audio-btn" type="button" aria-label="Play">
               <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
             </button>
@@ -2534,42 +2589,43 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
     <div class="slide-footer">
       <span>ninepointfive.ai · Gastrofon · UC 4</span>
+
       <span class="page-counter">07 / 09</span>
     </div>
   </section>
 
-  <!-- ╔══════ Slide 8 · UC5 — Gruppe + Mensch-Übergabe (Bonus) ══════╗ -->
+  <!-- ╔══════ Slide 8 · UC5 - Gruppe + Mensch-Übergabe (Bonus) ══════╗ -->
   <section class="slide uc concept-e" data-bonus>
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
-      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>Übergabe an Mitarbeiter</span></div>
+      <div class="slide-tag gastro"><span class="pill"><span class="live-dot" aria-hidden="true"></span>Staff Handover</span></div>
     </div>
 
     <div class="uc-story">
-      <div class="eyebrow reveal" style="--i:0">Anwendungsfall 5</div>
-      <h2 class="reveal" style="--i:1">Gruppenreservierung?<br>Das übernimmt ein Mensch.</h2>
+      <div class="eyebrow reveal" style="--i:0">Use Case 5</div>
+      <h2 class="reveal" style="--i:1">Group booking?<br>A human takes over.</h2>
       <p class="uc-setup reveal" style="--i:2">
-        Bei komplexen Anfragen wie großen Gruppen, Sonderwünschen oder Beschwerden erkennt Gastrofon die Grenze, sammelt Eckdaten und übergibt sauber ans Personal. Das ist Vertrauen, kein Versagen.
+        For complex requests - large groups, special wishes, or complaints - Gastrofon recognises the limit, gathers the key details, and hands off cleanly to staff. That's trust, not failure.
       </p>
       <ul class="uc-bullets">
-        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Anfrage: Geburtstag nächsten Samstag</li>
-        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h3l6-6"/><path d="m15 5 4 4"/><path d="M14.5 5.5L19 1l4 4-4.5 4.5z"/></svg></span>Komplexität sauber erkannt</li>
-        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/><path d="M2 6h2"/><path d="M2 10h2"/><path d="M2 14h2"/><path d="M2 18h2"/></svg></span>Wunschtermin notiert</li>
-        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 21 8 16 13"/><path d="M21 8H8a4 4 0 0 0-4 4v0"/></svg></span>Übergabe an echten Mitarbeiter</li>
+        <li class="reveal" style="--i:3"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Request: birthday next Saturday</li>
+        <li class="reveal" style="--i:4"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h3l6-6"/><path d="m15 5 4 4"/><path d="M14.5 5.5L19 1l4 4-4.5 4.5z"/></svg></span>Complexity cleanly identified</li>
+        <li class="reveal" style="--i:5"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/><path d="M2 6h2"/><path d="M2 10h2"/><path d="M2 14h2"/><path d="M2 18h2"/></svg></span>Preferred date noted</li>
+        <li class="reveal" style="--i:6"><span class="bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 21 8 16 13"/><path d="M21 8H8a4 4 0 0 0-4 4v0"/></svg></span>Handover to a real staff member</li>
       </ul>
 
       <div class="uc-cta-inline reveal" style="--i:7">
         <div class="uc-cta-block">
-          <div class="uc-cta-label">Jetzt anrufen</div>
+          <div class="uc-cta-label">Call now</div>
           <a class="uc-cta-phone" href="tel:+4973578854999" aria-label="Anrufen +49 7357 885 4999">
             <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A18 18 0 0 1 2 4.18 2 2 0 0 1 4 2h3.08a2 2 0 0 1 2 1.72 13 13 0 0 0 .68 3 2 2 0 0 1-.46 2L8 10.5a16 16 0 0 0 5.5 5.5l1.78-1.3a2 2 0 0 1 2-.46 13 13 0 0 0 3 .68 2 2 0 0 1 1.72 2z"/></svg></span>
             <span class="number" data-demo-number>+49 7357 885 4999</span>
           </a>
         </div>
         <div class="uc-cta-block uc-cta-audio">
-          <div class="uc-cta-label">Hörprobe</div>
+          <div class="uc-cta-label">Listen</div>
           <div class="audio-player">
-            <button class="audio-btn" type="button" aria-label="Abspielen">
+            <button class="audio-btn" type="button" aria-label="Play">
               <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
             </button>
@@ -2592,7 +2648,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
   </section>
 
-  <!-- ╔══════ Web-App 1 · Dashboard (nur ?variant=extended) ══════╗ -->
+  <!-- ╔══════ Web-App 1 · Dashboard (only ?variant=extended) ══════╗ -->
   <section class="slide webapp" data-extended>
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
@@ -2601,18 +2657,18 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
     <div class="webapp-head">
       <div class="eyebrow reveal" style="--i:0">Live-Dashboard</div>
-      <h2 class="webapp-h2 reveal" style="--i:1">Alle Kennzahlen. <strong>Auf einen Blick.</strong></h2>
-      <p class="webapp-sub reveal" style="--i:2">Reservierungen, Anrufvolumen und durchschnittliche Gesprächsdauer - direkt im Dashboard. Der KI-Telefonassistent dokumentiert lückenlos jeden Anruf, automatisch und in Echtzeit.</p>
+      <h2 class="webapp-h2 reveal" style="--i:1">All KPIs. <strong>At a Glance.</strong></h2>
+      <p class="webapp-sub reveal" style="--i:2">Reservations, call volume and average call duration — right in the dashboard. The AI phone assistant logs every call automatically and in real time.</p>
     </div>
 
     <figure class="browser-frame reveal" style="--i:3">
       <div class="browser-shot">
-        <img src="assets/webapp/dashboard.png" alt="Gastrofon Dashboard — Übersicht mit Kennzahlen, Anrufverlaufskurve und Anruftypen">
+        <img src="assets/webapp/dashboard.png" alt="Gastrofon Dashboard — Overview with KPIs, call volume chart and call types">
       </div>
     </figure>
 
     <div class="webapp-cap reveal" style="--i:6">
-      <span>Echtzeit-KPIs</span><span class="sep">·</span><span>Anruftypen kategorisiert</span><span class="sep">·</span><span>Kein manueller Aufwand</span>
+      <span>Real-time KPIs</span><span class="sep">·</span><span>Call types categorised</span><span class="sep">·</span><span>No manual effort</span>
     </div>
 
     <div class="slide-footer">
@@ -2621,7 +2677,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
   </section>
 
-  <!-- ╔══════ Web-App 2 · Anrufverlauf (nur ?variant=extended) ══════╗ -->
+  <!-- ╔══════ Web-App 2 · Call History (only ?variant=extended) ══════╗ -->
   <section class="slide webapp" data-extended>
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
@@ -2629,19 +2685,19 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
 
     <div class="webapp-head">
-      <div class="eyebrow reveal" style="--i:0">Anrufverlauf</div>
-      <h2 class="webapp-h2 reveal" style="--i:1">Jeder Anruf. <strong>Lückenlos protokolliert.</strong></h2>
-      <p class="webapp-sub reveal" style="--i:2">Vollständige Übersicht aller eingegangenen Anrufe mit Anruftyp, KI-Zusammenfassung und Gesprächsdauer. Filterbar nach Typ und Zeitraum.</p>
+      <div class="eyebrow reveal" style="--i:0">Call History</div>
+      <h2 class="webapp-h2 reveal" style="--i:1">Every Call. <strong>Fully Documented.</strong></h2>
+      <p class="webapp-sub reveal" style="--i:2">Complete overview of all incoming calls with call type, AI summary and call duration. Filterable by type and time period.</p>
     </div>
 
     <figure class="browser-frame reveal" style="--i:3">
       <div class="browser-shot">
-        <img src="assets/webapp/anrufverlauf.png" alt="Gastrofon Anrufverlauf — Liste aller Anrufe mit Typ, Zusammenfassung und Dauer">
+        <img src="assets/webapp/callhistory.png" alt="Gastrofon Call History — List of all calls with type, summary and duration">
       </div>
     </figure>
 
     <div class="webapp-cap reveal" style="--i:6">
-      <span>Alle Anrufe protokolliert</span><span class="sep">·</span><span>Filterbar</span><span class="sep">·</span><span>KI-Zusammenfassung je Gespräch</span>
+      <span>All calls logged</span><span class="sep">·</span><span>Filterable</span><span class="sep">·</span><span>AI summary per call</span>
     </div>
 
     <div class="slide-footer">
@@ -2650,7 +2706,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
   </section>
 
-  <!-- ╔══════ Web-App 3 · Anrufdetail (nur ?variant=extended) ══════╗ -->
+  <!-- ╔══════ Web-App 3 · Call Details (only ?variant=extended) ══════╗ -->
   <section class="slide webapp" data-extended>
     <div class="slide-chrome">
       <div class="brand-mark"><span class="dot"></span>Gastrofon</div>
@@ -2658,19 +2714,19 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
 
     <div class="webapp-head">
-      <div class="eyebrow reveal" style="--i:0">Anrufdetails</div>
-      <h2 class="webapp-h2 reveal" style="--i:1">Zusammenfassung, Aufnahme und Transkript. <strong>Auf Abruf.</strong></h2>
-      <p class="webapp-sub reveal" style="--i:2">Jedes Gespräch vollständig nachvollziehbar: KI-Zusammenfassung, abspielbare Original-Aufnahme und vollständiges Wort-für-Wort-Transkript.</p>
+      <div class="eyebrow reveal" style="--i:0">Call Details</div>
+      <h2 class="webapp-h2 reveal" style="--i:1">Summary, Recording and Transcript. <strong>On Demand.</strong></h2>
+      <p class="webapp-sub reveal" style="--i:2">Every conversation fully traceable: AI summary, playable original recording and complete word-for-word transcript.</p>
     </div>
 
     <figure class="browser-frame reveal" style="--i:3">
       <div class="browser-shot">
-        <img src="assets/webapp/anrufdetail.png" alt="Gastrofon Anrufdetail — Zusammenfassung, Gesprächsaufnahme und vollständiges Transkript">
+        <img src="assets/webapp/calldetails.png" alt="Gastrofon Call Details — Summary, recording and full transcript">
       </div>
     </figure>
 
     <div class="webapp-cap reveal" style="--i:6">
-      <span>KI-Zusammenfassung</span><span class="sep">·</span><span>Original-Aufnahme</span><span class="sep">·</span><span>Vollständiges Transkript</span>
+      <span>AI Summary</span><span class="sep">·</span><span>Original Recording</span><span class="sep">·</span><span>Full Transcript</span>
     </div>
 
     <div class="slide-footer">
@@ -2690,13 +2746,13 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     </div>
 
     <div class="outro-content">
-      <h1 class="outro-thanks reveal" style="--i:0">Danke!</h1>
-      <p class="outro-question reveal" style="--i:1">Was möchtet ihr genauer wissen?</p>
+      <h1 class="outro-thanks reveal" style="--i:0">Thank you!</h1>
+      <p class="outro-question reveal" style="--i:1">What would you like to know more about?</p>
 
       <div class="founders-row reveal" style="--i:2">
         <div class="founder-card">
           <div class="founder-info">
-            <div class="founder-photo-wrap"><img src="assets/luc.png" class="founder-photo" alt="Luc Schwenning"></div>
+            <div class="founder-photo-wrap"><img src="../assets/luc.png" class="founder-photo" alt="Luc Schwenning"></div>
             <div class="founder-name">Luc Schwenning</div>
             <div class="founder-role">Co-Founder · ninepointfive AI</div>
             <div class="founder-email">
@@ -2715,7 +2771,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
         </div>
         <div class="founder-card">
           <div class="founder-info">
-            <div class="founder-photo-wrap"><img src="assets/vlad.png" class="founder-photo" alt="Wlad Gerzen"></div>
+            <div class="founder-photo-wrap"><img src="../assets/vlad.png" class="founder-photo" alt="Wlad Gerzen"></div>
             <div class="founder-name">Wlad Gerzen</div>
             <div class="founder-role">Co-Founder · ninepointfive AI</div>
             <div class="founder-email">
@@ -2734,7 +2790,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
         </div>
         <div class="founder-card">
           <div class="founder-info">
-            <div class="founder-photo-wrap"><img src="assets/leon.png" class="founder-photo" alt="Leon Schwenning"></div>
+            <div class="founder-photo-wrap"><img src="../assets/leon.png" class="founder-photo" alt="Leon Schwenning"></div>
             <div class="founder-name">Leon Schwenning</div>
             <div class="founder-role">Co-Founder · ninepointfive AI</div>
             <div class="founder-email">
@@ -2763,7 +2819,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
 
     <div class="slide-footer">
       <span>ninepointfive.ai</span>
-      <span class="page-counter">09 / 09</span>
+      <span class="page-counter">12 / 12</span>
     </div>
   </section>
 
@@ -2776,35 +2832,31 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
       <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/>
     </svg>
   </div>
-  <h2>Bitte Handy quer halten</h2>
-  <p>Diese Präsentation ist im Querformat optimiert. Dreh dein Gerät einmal — die Slides erscheinen dann automatisch.</p>
-  <div id="mg-logo">
-    <span><span style="font-weight:700">Gastro</span><span style="color:#6abf5e;font-weight:700">fon</span></span>
-    <span>· ninepointfive AI</span>
-  </div>
+  <h2>Please hold your phone in landscape</h2>
+  <p>This presentation is optimised for landscape. Rotate your device — the slides will appear automatically.</p>
 </div>
 
 
 <!-- Hotkey Help Overlay -->
 <div class="help-overlay" id="helpOverlay">
   <div class="help-card">
-    <h3>Tastatur-Steuerung</h3>
-    <p>Eine zentrale Demo-Nummer für alle UCs. Recording-Toggle pro Slide.</p>
+    <h3>Keyboard Controls</h3>
+    <p>One central demo number for all use cases. Recording toggle per slide.</p>
     <div class="help-grid">
-      <kbd>→ / Space</kbd><span>Nächste Slide</span>
-      <kbd>← </kbd><span>Vorherige Slide</span>
-      <kbd>R</kbd><span>Recording-Player auf UC-Slide ein/aus</span>
-      <kbd>F</kbd><span>Vollbild ein/aus</span>
-      <kbd>?</kbd><span>Diese Hilfe</span>
-      <kbd>Esc</kbd><span>Hilfe schließen</span>
+      <kbd>→ / Space</kbd><span>Next slide</span>
+      <kbd>← </kbd><span>Previous slide</span>
+      <kbd>R</kbd><span>Recording player on UC slide on/off</span>
+      <kbd>F</kbd><span>Fullscreen on/off</span>
+      <kbd>?</kbd><span>This help</span>
+      <kbd>Esc</kbd><span>Close help</span>
     </div>
-    <div class="close-hint">Esc oder Klick außerhalb schließt</div>
+    <div class="close-hint">Esc or click outside to close</div>
   </div>
 </div>
 
 <script>
 (function(){
-  // ───── Stage skalieren — füllt Viewport exakt ─────
+  // ───── Stage skalieren - füllt Viewport exakt ─────
   const stage = document.getElementById('stage');
   function fitStage() {
     const w = document.documentElement.clientWidth;
@@ -2813,8 +2865,9 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     stage.style.transform = `translate(-50%, -50%) scale(${s})`;
   }
   fitStage();
-  // rAF-throttle: bei iOS Pinch-Zoom feuert 'resize' bis zu 60Hz; ohne
-  // Throttle ergibt das einen GPU-Storm der den Tab killt.
+  // iOS Safari: address bar animates after load — re-measure at multiple points
+  [100, 300, 600].forEach(t => setTimeout(fitStage, t));
+  // rAF-throttle to survive iOS pinch-zoom (visualViewport fires at 60Hz)
   let fitPending = false;
   function fitStageThrottled() {
     if (fitPending) return;
@@ -2822,6 +2875,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     requestAnimationFrame(() => { fitPending = false; fitStage(); });
   }
   window.addEventListener('resize', fitStageThrottled);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', fitStageThrottled);
   document.addEventListener('fullscreenchange', fitStageThrottled);
   document.addEventListener('webkitfullscreenchange', fitStageThrottled);
 
@@ -2893,14 +2947,13 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     });
     audio.addEventListener('loadedmetadata', () => { timeEl.textContent = fmt(audio.duration); });
 
-    // Speed-Button: schaltet ×1.0 → ×1.5 → ×2.0 → ×1.0
     const speeds = [1, 1.5];
     let speedIdx = 0;
     const speedBtn = document.createElement('button');
     speedBtn.type = 'button';
     speedBtn.className = 'audio-speed-btn';
     speedBtn.textContent = '×1.0';
-    speedBtn.setAttribute('aria-label', 'Wiedergabegeschwindigkeit');
+    speedBtn.setAttribute('aria-label', 'Playback speed');
     player.insertBefore(speedBtn, timeEl);
     speedBtn.addEventListener('click', () => {
       speedIdx = (speedIdx + 1) % speeds.length;
@@ -2994,7 +3047,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     slide.querySelectorAll('.kpi-counter').forEach(el => {
       const target = parseFloat(el.dataset.target);
       const decimals = parseInt(el.dataset.decimals || '0', 10);
-      // Bei jedem Slide-Aufruf neu starten — auch beim Zurueckblaettern.
+      // Bei jedem Slide-Aufruf neu starten - auch beim Zurueckblaettern.
       // Vorherige requestAnimationFrame-Loop via Generation-Token entwerten.
       const gen = (parseInt(el.dataset.gen || '0', 10) + 1);
       el.dataset.gen = String(gen);
@@ -3006,7 +3059,7 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
         const t = Math.min(1, (now - start) / dur);
         const eased = 1 - Math.pow(1 - t, 4);
         const val = target * eased;
-        el.textContent = decimals > 0 ? val.toFixed(decimals).replace('.', ',') : Math.round(val);
+        el.textContent = decimals > 0 ? val.toFixed(decimals) : Math.round(val);
         if (t < 1) requestAnimationFrame(step);
         else el.textContent = decimals > 0 ? target.toFixed(decimals).replace('.', ',') : target;
       }
@@ -3040,28 +3093,39 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
       if (audio) audio.classList.toggle('is-visible');
     }
     else if (e.key.toLowerCase() === 'f') {
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-      else document.exitFullscreen?.();
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
     }
     else if (e.key === '?' || e.key.toLowerCase() === 'h') { toggleHelp(); }
     else if (e.key === 'Escape') { toggleHelp(false); }
   });
 
 
-  // ───── Click navigation (linke Hälfte = zurück, rechte Hälfte = vor) ─────
-  // Bound to document (statt .stage), damit auch der schwarze Rahmen
-  // außerhalb der skalierten Slide navigierbar ist (mobile-Verhalten).
+  // ───── Tablet navigation buttons ─────
+  const navPrev = document.getElementById('nav-prev');
+  const navNext = document.getElementById('nav-next');
+  if (navPrev) navPrev.addEventListener('click', prev);
+  if (navNext) navNext.addEventListener('click', next);
+
+  // ───── Click navigation — full viewport (including black border) ─────
   document.addEventListener('click', e => {
-    if (e.target.closest('button, a, input, audio, select, textarea, [role="button"], .audio-player, .demo-audio, .callout, #helpOverlay')) return;
-    if (e.clientX < window.innerWidth / 2) {
-      if (idx > 0) prev();
-      // erste Slide + Linksklick = no-op
-    } else if (idx < slides.length - 1) {
-      next();
-      // letzte Slide + Rechtsklick = no-op
-    }
+    if (e.target.closest('button, a, input, audio, select, textarea, [role="button"], .audio-player, .demo-audio, #nav-prev, #nav-next, #helpOverlay')) return;
+    if (e.clientX < window.innerWidth / 2) { if (idx > 0) prev(); }
+    else if (idx < slides.length - 1) { next(); }
   });
 
+  // ───── Touch/Swipe navigation ─────
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) next(); else prev();
+  }, { passive: true });
 
   // ───── Init ─────
   // Re-evaluate slides after variant filtering applies
@@ -3069,7 +3133,6 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     const visible = Array.from(document.querySelectorAll('.slide')).filter(s => getComputedStyle(s).display !== 'none');
     slides.length = 0;
     visible.forEach(s => slides.push(s));
-    // Page-Counter dynamisch an die aktive Variante anpassen (NN / Gesamt)
     const total = String(visible.length).padStart(2, '0');
     visible.forEach((s, i) => {
       const pc = s.querySelector('.page-counter');
@@ -3079,6 +3142,13 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
   }, 0);
 })();
 </script>
+
+<button id="nav-prev" aria-label="Previous slide">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+</button>
+<button id="nav-next" aria-label="Next slide">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+</button>
 
 </body>
 </html>
