@@ -2905,7 +2905,9 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     requestAnimationFrame(() => { fitPending = false; fitStage(); });
   }
   window.addEventListener('resize', fitStageThrottled);
-  if (window.visualViewport) window.visualViewport.addEventListener('resize', fitStageThrottled);
+  // visualViewport.resize hier bewusst NICHT abonnieren: feuert bei iOS-Pinch-Zoom
+  // bis 60 Hz und triggert dann fitStage in einer Schleife — wirkt wie ein Refresh
+  // und bricht die Zoom-Geste ab. Entspricht dem Verhalten von /mobile/.
   document.addEventListener('fullscreenchange', fitStageThrottled);
   document.addEventListener('webkitfullscreenchange', fitStageThrottled);
 
@@ -3144,18 +3146,10 @@ body[data-bonus="off"] .slide[data-bonus] { display: none !important; }
     else if (idx < slides.length - 1) { next(); }
   });
 
-  // ───── Touch/Swipe navigation ─────
-  let touchStartX = 0, touchStartY = 0;
-  document.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
-  document.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
-    if (dx < 0) next(); else prev();
-  }, { passive: true });
+  // Hinweis: Swipe-Navigation (touchstart/touchend) absichtlich entfernt.
+  // Sie hat Pinch-Zoom-Gesten als Swipe interpretiert und Slides weitergeschaltet,
+  // sobald wahrend des Zooms ein Finger >40 px horizontal wanderte. /mobile/ hat
+  // diese Geste nie gehabt — Navigation laeuft ueber Tap auf linke/rechte Halfte.
 
   // ───── Init ─────
   // Re-evaluate slides after variant filtering applies
